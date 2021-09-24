@@ -1,0 +1,42 @@
+{ 
+    "api_token": "string (unique)",
+    "drivers": [
+        {
+            "id": "string (unique)",
+            "name": "string",
+            "max_distance": "integer",
+            "coordinates": {
+                "latitude": "float",
+                "longitude": "float"
+            },
+            "modal": "string",
+            "index": "integer (unique)",
+            "skills": [
+                {
+                    "skill": "string"
+                }
+
+            ]
+        
+        }
+    ],
+    "order": {
+        "id":"string (unique)",
+        "time_window": "integer",
+        "skill": "string",
+        "pickup": {
+            "coordinates":{
+                "latitude": "float",
+                "longitude": "float"
+            }
+            
+        },
+        "delivery": {
+            "coordinates":{
+                "latitude": "float",
+                "longitude": "float"
+            },
+            "customer_name": "string"
+        }
+    }
+}
