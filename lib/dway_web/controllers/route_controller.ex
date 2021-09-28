@@ -14,14 +14,27 @@ defmodule DwayWeb.RouteController do
   end
 
   def create(conn, route_params) do
+    order_params = route_params["order"]
+    |> Order.get_order()
+    # order_params = route_params["order"]["pickup"]["coordinates"]
+    # |> IO.inspect(label: "AQUIIII")
+    # |> Enum.at(0)
+    # |> Map.get("coordinates")
+    # pickup_coordinates = {order_params["lat"], order_params["long"]}
+    # IO.puts ("PICKUP")
+    # IO.inspect(pickup_coordinates)
 
     coordinates = route_params["drivers"]
+
     |> Enum.at(0)
     |> Map.get("coordinates")
+
+
     x = {coordinates["lat"], coordinates["long"]}
+
     driver = route_params["drivers"]
     |> Enum.at(0)
-    IO.inspect(driver)
+    #IO.inspect(driver)
 
     #Parser.parse_route(route_params)
     conn

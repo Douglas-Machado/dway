@@ -6,8 +6,8 @@
             "name": "string",
             "max_distance": "integer",
             "coordinates": {
-                "latitude": "float",
-                "longitude": "float"
+                "long": "float",
+                "lat": "float"
             },
             "modal": "string",
             "index": "integer (unique)",
@@ -26,15 +26,15 @@
         "skill": "string",
         "pickup": {
             "coordinates":{
-                "latitude": "float",
-                "longitude": "float"
+                "long": "float",
+                "lat": "float"
             }
             
         },
         "delivery": {
             "coordinates":{
-                "latitude": "float",
-                "longitude": "float"
+                "long": "float",
+                "lat": "float"
             },
             "customer_name": "string"
         }
