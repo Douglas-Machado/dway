@@ -4,6 +4,7 @@ defmodule DwayWeb.RouteController do
   alias Dway.Routing
   alias Dway.Routing.Route
   alias Dway.Parser
+  alias Dway.Order
 
   action_fallback DwayWeb.FallbackController
 
@@ -14,9 +15,17 @@ defmodule DwayWeb.RouteController do
 
   def create(conn, route_params) do
 
-    Parser.parse_route(route_params)
+    coordinates = route_params["drivers"]
+    |> Enum.at(0)
+    |> Map.get("coordinates")
+    x = {coordinates["lat"], coordinates["long"]}
+    driver = route_params["drivers"]
+    |> Enum.at(0)
+    IO.inspect(driver)
+
+    #Parser.parse_route(route_params)
     conn
-    |> render("show.json", route: nil)
+    |> json(driver)
     # with {:ok, %Route{} = route} <- Routing.create_route(route_params) do
     #   conn
     #   |> put_status(:created)
