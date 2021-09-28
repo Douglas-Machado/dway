@@ -1,5 +1,5 @@
 # parser da order  - gerar a struct da order
-defmodule Dway.Order do
+defmodule Dway.Parser.Order do
 
   def get_order(order_params) do
     pickup_coordinates = order_params["pickup"]["coordinates"]
