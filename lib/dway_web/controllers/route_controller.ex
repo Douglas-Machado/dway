@@ -3,7 +3,7 @@ defmodule DwayWeb.RouteController do
 
   alias Dway.Routing
   alias Dway.Routing.Route
-  alias Dway.Parser.{Driver, Order}
+  alias Dway.Parser.Order
 
   action_fallback DwayWeb.FallbackController
 
@@ -13,11 +13,8 @@ defmodule DwayWeb.RouteController do
   end
 
   def create(conn, route_params) do
-    route_params["order"]
-    |> Order.get_order()
-
-    route_params["drivers"]
-    |> Driver.get_driver_coord()
+    Order.get_order(route_params["order"])
+    Dway.Parser.get_driver_to_pickup_distance(route_params["drivers"], route_params["order"])
     # order_params = route_params["order"]["pickup"]["coordinates"]
     # |> IO.inspect(label: "AQUIIII")
     # |> Enum.at(0)
@@ -36,7 +33,6 @@ defmodule DwayWeb.RouteController do
 
     driver = route_params["drivers"]
     |> Enum.at(0)
-    #IO.inspect(driver)
 
     #Parser.parse_route(route_params)
     conn
