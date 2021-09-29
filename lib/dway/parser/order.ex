@@ -1,10 +1,16 @@
 # parser da order  - gerar a struct da order
 defmodule Dway.Parser.Order do
 
+  @max_distance_biker 2000
+
   def get_order(order_params) do
-    Haversine.distance(
+    delivery_distance = Haversine.distance(
       get_pickup_coord(order_params), get_delivery_coord(order_params)
       )
+      cond do
+        delivery_distance > @max_distance_biker -> "m"
+        true -> "b"
+      end
   end
 
   def get_pickup_coord(order_params) do
