@@ -16,9 +16,10 @@ defmodule DwayWeb.RouteController do
   def create(conn, route_params) do
     Order.get_order(route_params["order"])
     Parser.get_driver_to_pickup_distance(route_params["drivers"], route_params["order"])
-    Driver.get_driver_modal(route_params["drivers"])
-    coordinates = route_params["drivers"]
+    #Driver.get_driver_modal(route_params["drivers"], route_params["order"])
 
+    #somente mostrar resultado PRECISA SER EDITADO
+    coordinates = route_params["drivers"]
     |> Enum.at(0)
     |> Map.get("coordinates")
 
