@@ -3,8 +3,8 @@
 defmodule Dway.Parser.Driver do
 
   def get_driver_coord(driver_params) do
-    driver = Enum.at(driver_params, 0)
-    {driver["coordinates"]["long"], driver["coordinates"]["lat"]}
-    |> IO.inspect(label: "driver coord")
+    driver_params
+      |> Enum.map(&(&1["coordinates"]))
+      |> Enum.map(&({&1["long"], &1["lat"]}))
   end
 end

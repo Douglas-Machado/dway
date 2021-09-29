@@ -15,13 +15,6 @@ defmodule DwayWeb.RouteController do
   def create(conn, route_params) do
     Order.get_order(route_params["order"])
     Dway.Parser.get_driver_to_pickup_distance(route_params["drivers"], route_params["order"])
-    # order_params = route_params["order"]["pickup"]["coordinates"]
-    # |> IO.inspect(label: "AQUIIII")
-    # |> Enum.at(0)
-    # |> Map.get("coordinates")
-    # pickup_coordinates = {order_params["lat"], order_params["long"]}
-    # IO.puts ("PICKUP")
-    # IO.inspect(pickup_coordinates)
 
     coordinates = route_params["drivers"]
 
@@ -34,7 +27,6 @@ defmodule DwayWeb.RouteController do
     driver = route_params["drivers"]
     |> Enum.at(0)
 
-    #Parser.parse_route(route_params)
     conn
     |> json(driver)
     # with {:ok, %Route{} = route} <- Routing.create_route(route_params) do
