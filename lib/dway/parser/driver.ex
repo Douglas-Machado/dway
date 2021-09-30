@@ -6,7 +6,7 @@ defmodule Dway.Parser.Driver do
 
   def get_driver_coord(driver_params) do
     driver_params
-      |> Enum.map(&({&1["coordinates"]["long"], &1["coordinates"]["lat"]}))
+      |> Enum.map(&({&1["coordinates"]["long"], &1["coordinates"]["lat"], &1["id"]}))
   end
 
   def get_driver_modal(drivers_params, order_params) do
