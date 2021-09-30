@@ -5,7 +5,7 @@ defmodule Dway.Parser do
 
   def get_driver_to_pickup_distance(drivers, order) do
     Driver.get_driver_modal(drivers, order)
-      |> Enum.map(&(Haversine.distance(&1, Order.get_pickup_coord(order))))
+      |> Enum.map(fn {long, lat, id} -> {Haversine.distance({long, lat}, Order.get_pickup_coord(order)), id} end)
       |> order_drivers()
 
   end

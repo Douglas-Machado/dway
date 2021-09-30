@@ -11,6 +11,7 @@ defmodule Dway.Parser.Order do
         delivery_distance > @max_distance_biker -> "m"
         true -> "b"
       end
+
   end
 
   def get_pickup_coord(order_params) do
