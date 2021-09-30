@@ -1,10 +1,6 @@
 # parser da order  - gerar a struct da order
 defmodule Dway.Parser.Order do
 
-  alias Dway.Parser.Rules
-
-  @max_distance_biker 2000
-
   def get_order(order_params) do
     Haversine.distance(
       get_pickup_coord(order_params), get_delivery_coord(order_params)
