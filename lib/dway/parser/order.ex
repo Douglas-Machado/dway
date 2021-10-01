@@ -1,11 +1,10 @@
 # parser da order  - gerar a struct da order
 defmodule Dway.Parser.Order do
-
   def get_order(order_params) do
     Haversine.distance(
-      get_pickup_coord(order_params), get_delivery_coord(order_params)
-      )
-    # |> Rules.rule()
+      get_pickup_coord(order_params),
+      get_delivery_coord(order_params)
+    )
   end
 
   def get_pickup_coord(order_params) do
@@ -17,5 +16,4 @@ defmodule Dway.Parser.Order do
     delivery_coordinates = order_params["delivery"]["coordinates"]
     {delivery_coordinates["long"], delivery_coordinates["lat"]}
   end
-
 end
