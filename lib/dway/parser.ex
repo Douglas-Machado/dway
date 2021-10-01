@@ -1,64 +1,35 @@
 # receber o request da rota
 # fazer o parser (converter a string do json pro map do elixir, validar os dados) do json
 defmodule Dway.Parser do
-  alias Dway.Parser.{Driver, Order}
+  alias Dway.Parser.{DriverParser, Order}
+  alias Dway.Fleet.Driver
 
   @max_distance_biker 2000
 
   def get_driver_to_pickup_distance(drivers, order) do
-    mapa =
-      Driver.get_driver_coord(drivers)
-      |> Enum.map(fn {long, lat, driver_id, modal, index} ->
-        {Haversine.distance({long, lat}, Order.get_pickup_coord(order)), driver_id, modal, index}
+    order_distance = Order.get_order_distance(order)
+      DriverParser.get_driver_coord(drivers)
+      |> Enum.map(fn %Driver{coordinates: %{lat: lat, long: long}} = driver ->
+        distance_to_pickup = Haversine.distance({long, lat}, Order.get_pickup_coord(order))
+        distance_to_delivery = distance_to_pickup + order_distance
+        Driver.change_distances(driver, %{distance_to_pickup: distance_to_pickup, distance_to_delivery: distance_to_delivery})
+
       end)
-      |> Enum.map(fn {distance_to_pickup, driver_id, modal, index} ->
-        {distance_to_pickup + Order.get_order(order), driver_id, modal, index}
+      |> Enum.reject(fn %Driver{distance_to_delivery: distance_to_delivery, max_distance: max_distance} ->
+        distance_to_delivery > max_distance
       end)
-
-    case Enum.filter(mapa, fn {_total_distance, _driver_id, modal, _index} -> modal == "b" end) do
-      [] ->
-        Enum.filter(mapa, fn {_total_distance, _driver_id, modal, _index} -> modal == "m" end)
-        |> order_drivers()
-
-      list ->
-        case Enum.filter(list, fn {total_distance, _driver_id, _modal, _index} ->
-               total_distance <= @max_distance_biker
-             end) do
-          [] ->
-            Enum.filter(mapa, fn {_total_distance, _driver_id, modal, _index} -> modal == "m" end)
-            |> order_drivers()
-
-          list ->
-            order_drivers(list)
-        end
-    end
-
-    #   Enum.reduce(mapa, {99999999, "ss", "aa"}, fn {distancia, _id, _modal} = driver, {acc_distancia, _, _} = acc -> if distancia < acc_distancia do
-    #     driver
-    #   else
-    #     acc
-    #   end
-    # end )
+      |> order_drivers_by_modal(order_distance)
   end
 
-  def order_drivers(params) do
-    params
-    |> Enum.reduce({9_999_999_999_999_999, "ss", "aa", 80_000_000_000_000}, fn {distancia, _id,
-                                                                                _modal,
-                                                                                index} = driver,
-                                                                               {acc_distancia, _,
-                                                                                _,
-                                                                                acc_index} = acc ->
-      if distancia < acc_distancia do
-        driver
-      else
-        if distancia == acc_distancia && index < acc_index do
-          driver
-        else
-          acc
-        end
-      end
-    end)
-    |> IO.inspect(label: "ordem aqui")
+  def order_drivers_by_modal(drivers, order_distance) when order_distance <= @max_distance_biker do
+    drivers
+    |> Enum.sort_by(&{&1.modal, &1.distance_to_pickup, &1.index})
   end
+
+  def order_drivers_by_modal(drivers, _order_distance) do
+    drivers
+    |> Enum.reject(fn %Driver{modal: modal} -> modal == "b" end)
+    |> Enum.sort_by(&{&1.modal, &1.distance_to_pickup, &1.index})
+  end
+
 end
