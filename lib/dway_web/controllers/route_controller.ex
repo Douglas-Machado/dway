@@ -13,14 +13,10 @@ defmodule DwayWeb.RouteController do
   end
 
   def create(conn, route_params) do
-    Parser.get_driver_to_pickup_distance(route_params["drivers"], route_params["order"])
+    driver = Parser.get_driver_to_pickup_distance(route_params["drivers"], route_params["order"])
+    |> Enum.at(0)
 
     # somente mostrar resultado PRECISA SER EDITADO
-
-    driver =
-      route_params["drivers"]
-      |> Enum.at(0)
-
     conn
     |> json(driver)
 
