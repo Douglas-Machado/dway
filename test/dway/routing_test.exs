@@ -35,7 +35,12 @@ defmodule Dway.RoutingTest do
 
     test "update_route/2 with valid data updates the route" do
       route = route_fixture()
-      update_attrs = %{api_token: "some updated api_token", drivers: "some updated drivers", order: "some updated order"}
+
+      update_attrs = %{
+        api_token: "some updated api_token",
+        drivers: "some updated drivers",
+        order: "some updated order"
+      }
 
       assert {:ok, %Route{} = route} = Routing.update_route(route, update_attrs)
       assert route.api_token == "some updated api_token"
