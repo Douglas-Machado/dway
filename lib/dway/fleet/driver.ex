@@ -5,16 +5,16 @@ defmodule Dway.Fleet.Driver do
   @fields_to_export ~w(id name modal index distance_to_delivery distance_to_pickup)a
   @derive {Jason.Encoder, only: @fields_to_export}
 
-  @type t :: %__MODULE__ {
-   id: String.t(),
-   name: String.t(),
-   max_distance: Integer.t(),
-   coordinates: map(),
-   modal: String.t(),
-   index: Integer.t(),
-   distance_to_pickup: Float.t(),
-   distance_to_delivery: Float.t()
-  }
+  @type t :: %__MODULE__{
+          id: String.t(),
+          name: String.t(),
+          max_distance: Integer.t(),
+          coordinates: map(),
+          modal: String.t(),
+          index: Integer.t(),
+          distance_to_pickup: Float.t(),
+          distance_to_delivery: Float.t()
+        }
 
   @primary_key false
   embedded_schema do
@@ -34,8 +34,10 @@ defmodule Dway.Fleet.Driver do
         ) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = driver, attributes) do
     attributes = parser_coordinates(attributes)
+
     driver
     |> cast(attributes, [:id, :name, :max_distance, :coordinates, :modal, :index])
+
     # to do - validate
   end
 
@@ -43,6 +45,7 @@ defmodule Dway.Fleet.Driver do
     driver
     |> cast(distances, [:distance_to_pickup, :distance_to_delivery])
     |> applied_changeset()
+
     # to do - validate
   end
 
@@ -55,7 +58,9 @@ defmodule Dway.Fleet.Driver do
     Map.put(attributes, "coordinates", %{long: long, lat: lat})
   end
 
-  def parser_coordinates(%{"coordinates" => %{"longitude" => long, "latitude" => lat}} = attributes) do
+  def parser_coordinates(
+        %{"coordinates" => %{"longitude" => long, "latitude" => lat}} = attributes
+      ) do
     Map.put(attributes, "coordinates", %{long: long, lat: lat})
   end
 end
