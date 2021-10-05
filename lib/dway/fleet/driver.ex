@@ -2,6 +2,8 @@ defmodule Dway.Fleet.Driver do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Dway.Routing.Route
+
   @fields_to_export ~w(id name modal index distance_to_delivery distance_to_pickup)a
   @derive {Jason.Encoder, only: @fields_to_export}
 
@@ -26,6 +28,8 @@ defmodule Dway.Fleet.Driver do
     field :index, :integer
     field :distance_to_pickup, :float
     field :distance_to_delivery, :float
+
+    belongs_to :routes, Route
   end
 
   @spec changeset(

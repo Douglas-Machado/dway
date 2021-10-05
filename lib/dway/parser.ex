@@ -32,7 +32,6 @@ defmodule Dway.Parser do
       when order_distance <= @max_distance_biker do
     drivers
     |> Enum.sort_by(&{&1.modal, &1.distance_to_pickup, &1.index})
-    |> IO.inspect(label: "driver")
   end
 
   def order_drivers_by_modal(drivers, _order_distance) do
