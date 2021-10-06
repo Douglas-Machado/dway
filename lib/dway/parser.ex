@@ -8,20 +8,28 @@ defmodule Dway.Parser do
 
   def get_driver_to_pickup_distance(drivers, order) do
     order_distance = Order.get_order_distance(order)
-      DriverParser.get_driver_coord(drivers)
-      |> Enum.map(fn %Driver{coordinates: %{lat: lat, long: long}} = driver ->
-        distance_to_pickup = Haversine.distance({long, lat}, Order.get_pickup_coord(order))
-        distance_to_delivery = distance_to_pickup + order_distance
-        Driver.change_distances(driver, %{distance_to_pickup: distance_to_pickup, distance_to_delivery: distance_to_delivery})
 
-      end)
-      |> Enum.reject(fn %Driver{distance_to_delivery: distance_to_delivery, max_distance: max_distance} ->
-        distance_to_delivery > max_distance
-      end)
-      |> order_drivers_by_modal(order_distance)
+    DriverParser.get_driver_coord(drivers)
+    |> Enum.map(fn %Driver{coordinates: %{lat: lat, long: long}} = driver ->
+      distance_to_pickup = Haversine.distance({long, lat}, Order.get_pickup_coord(order))
+      distance_to_delivery = distance_to_pickup + order_distance
+
+      Driver.change_distances(driver, %{
+        distance_to_pickup: distance_to_pickup,
+        distance_to_delivery: distance_to_delivery
+      })
+    end)
+    |> Enum.reject(fn %Driver{
+                        distance_to_delivery: distance_to_delivery,
+                        max_distance: max_distance
+                      } ->
+      distance_to_delivery > max_distance
+    end)
+    |> order_drivers_by_modal(order_distance)
   end
 
-  def order_drivers_by_modal(drivers, order_distance) when order_distance <= @max_distance_biker do
+  def order_drivers_by_modal(drivers, order_distance)
+      when order_distance <= @max_distance_biker do
     drivers
     |> Enum.sort_by(&{&1.modal, &1.distance_to_pickup, &1.index})
   end
@@ -31,5 +39,4 @@ defmodule Dway.Parser do
     |> Enum.reject(fn %Driver{modal: modal} -> modal == "b" end)
     |> Enum.sort_by(&{&1.modal, &1.distance_to_pickup, &1.index})
   end
-
 end

@@ -1,5 +1,4 @@
 defmodule Dway.Parser.DriverParser do
-
   alias Dway.Fleet.Driver
 
   def get_driver_coord(driver_params) do
