@@ -1,17 +1,17 @@
 # receber o request da rota
 # fazer o parser (converter a string do json pro map do elixir, validar os dados) do json
 defmodule Dway.Parser do
-  alias Dway.Parser.{DriverParser, Order}
+  alias Dway.Parser.{DriverParser, OrderParser}
   alias Dway.Fleet.Driver
 
   @max_distance_biker 2000
 
   def get_driver_to_pickup_distance(drivers, order) do
-    order_distance = Order.get_order_distance(order)
+    order_distance = OrderParser.get_order_distance(order)
 
     DriverParser.get_driver_coord(drivers)
     |> Enum.map(fn %Driver{coordinates: %{lat: lat, long: long}} = driver ->
-      distance_to_pickup = Haversine.distance({long, lat}, Order.get_pickup_coord(order))
+      distance_to_pickup = Haversine.distance({long, lat}, OrderParser.get_pickup_coord(order))
       distance_to_delivery = distance_to_pickup + order_distance
 
       Driver.change_distances(driver, %{
