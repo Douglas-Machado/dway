@@ -22,7 +22,7 @@
     ],
     "order": {
         "id":"string (unique)",
-        "time_window": "integer",
+        "time_window": "float",
         "skill": "string",
         "pickup": {
             "coordinates":{
