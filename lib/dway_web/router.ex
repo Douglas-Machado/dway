@@ -8,6 +8,8 @@ defmodule DwayWeb.Router do
   scope "/api", DwayWeb do
     pipe_through :api
     resources "/routes", RouteController, except: [:new, :edit]
+
+    get "/", WelcomeController, :index
   end
 
   # Enables LiveDashboard only for development
