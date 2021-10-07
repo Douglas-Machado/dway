@@ -26,11 +26,13 @@ defmodule Dway.Fleet.Order do
   end
 
   @spec changeset(
-          Dway.Fleet.Driver.t(),
+          Dway.Fleet.Order.t(),
           :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
         ) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = order, attributes) do
-    attributes = parser_coordinates(attributes)
+    attributes = parser_coordinates_delivery(attributes)
+    attributes = parser_coordinates_pickup(attributes)
+
 
     order
     |> cast(attributes, @require_params)
@@ -42,13 +44,19 @@ defmodule Dway.Fleet.Order do
     apply_changes(changeset)
   end
 
-  def parser_coordinates(%{"coordinates" => %{"long" => long, "lat" => lat}} = attributes) do
-    Map.put(attributes, "coordinates", %{long: long, lat: lat})
+  def parser_coordinates_pickup(%{"pickup" => %{"coordinates" => %{"long" => long, "lat" => lat}}} = attributes) do
+    Map.put(attributes, "pickup_coordinates", %{long: long, lat: lat})
   end
 
-  def parser_coordinates(
-        %{"coordinates" => %{"longitude" => long, "latitude" => lat}} = attributes
-      ) do
-    Map.put(attributes, "coordinates", %{long: long, lat: lat})
+  def parser_coordinates_pickup( %{"pickup" => %{"coordinates" => %{"longitude" => long, "latitude" => lat}}} = attributes) do
+    Map.put(attributes, "pickup_coordinates", %{long: long, lat: lat})
+  end
+
+  def parser_coordinates_delivery(%{"delivery" => %{"coordinates" => %{"long" => long, "lat" => lat}}} = attributes) do
+    Map.put(attributes, "delivery_coordinates", %{long: long, lat: lat})
+  end
+
+  def parser_coordinates_delivery( %{"delivery" => %{"coordinates" => %{"longitude" => long, "latitude" => lat}}} = attributes) do
+    Map.put(attributes, "delivery_coordinates", %{long: long, lat: lat})
   end
 end

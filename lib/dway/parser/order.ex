@@ -1,21 +1,22 @@
 defmodule Dway.Parser.OrderParser do
+
+  alias Dway.Fleet.Order
   def get_order_distance(order_params) do
+    IO.inspect(order_params, label: "antes do haversine")
     Haversine.distance(
       get_pickup_coord(order_params),
       get_delivery_coord(order_params)
     )
+    |> IO.inspect(label: "haversine")
   end
 
   def get_pickup_coord(order_params) do
-    pickup_coordinates = %Order{pickup_coordinates: %{pickup_lat: pickup_lat, pickup_long: pickup_long}}
-  #   pickup_coordinates = order_params["pickup"]["coordinates"]
-  #   {pickup_coordinates["long"], pickup_coordinates["lat"]}
+
+    {order_params.pickup_coordinates[:long], order_params.pickup_coordinates[:lat]}
+
   end
 
   def get_delivery_coord(order_params) do
-    delivery_coordinates = %Order{delivery_coordinates: %{delivery_lat: delivery_lat, delivery_long: delivery_long}}
-
-    # delivery_coordinates = order_params["delivery"]["coordinates"]
-    # {delivery_coordinates["long"], delivery_coordinates["lat"]}
+    {order_params.delivery_coordinates[:long], order_params.delivery_coordinates[:lat]}
   end
 end

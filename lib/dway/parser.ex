@@ -6,10 +6,15 @@ defmodule Dway.Parser do
 
   @max_distance_biker 2000
 
-  def get_driver_to_pickup_distance(drivers, order) do
+  def get_driver_to_pickup_distance(drivers_params, order_params) do
+    order = DriverParser.get_order_coord(order_params)
+    |> IO.inspect(label: "depois da linha 10")
     order_distance = OrderParser.get_order_distance(order)
 
-    DriverParser.get_driver_coord(drivers)
+    IO.inspect(order_distance, label: "order d")
+    IO.inspect(order, label: "order")
+
+    DriverParser.get_driver_coord(drivers_params)
     |> Enum.map(fn %Driver{coordinates: %{lat: lat, long: long}} = driver ->
       distance_to_pickup = Haversine.distance({long, lat}, OrderParser.get_pickup_coord(order))
       distance_to_delivery = distance_to_pickup + order_distance
