@@ -5,6 +5,7 @@ defmodule DwayWeb.RouteController do
   alias Dway.Routing.Route
   alias Dway.Parser.Api
   alias Dway.{Parser, Request}
+  alias Dway.FallbackController
 
   action_fallback DwayWeb.FallbackController
 
@@ -14,9 +15,8 @@ defmodule DwayWeb.RouteController do
   end
 
   def create(conn, route_params) do
-    Api.validate(route_params["api_token"])
-
-    driver =
+    with {:ok, _content} <- Api.validate(route_params["api_token"]) do
+      driver =
       Parser.get_driver_to_pickup_distance(route_params["drivers"], route_params["order"])
       |> Enum.at(0)
       |> Request.get_params(route_params["order"])
@@ -24,6 +24,10 @@ defmodule DwayWeb.RouteController do
     # somente mostrar resultado PRECISA SER EDITADO
     conn
     |> json(driver)
+
+    end
+
+
 
     # with {:ok, %Route{} = route} <- Routing.create_route(route_params) do
     #   conn
