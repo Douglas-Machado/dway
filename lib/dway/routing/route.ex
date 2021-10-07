@@ -9,6 +9,8 @@ defmodule Dway.Routing.Route do
 
   @derive {Jason.Encoder, only: @fields_to_export}
 
+  @require_params [:total_time, :pickup_time, :delivery_time, :total_distance]
+
   @primary_key {:id, :binary_id, autogenerate: true}
 
   @type t :: %__MODULE__{
@@ -36,7 +38,7 @@ defmodule Dway.Routing.Route do
     route
     |> cast(attrs, [:total_time, :pickup_time, :delivery_time, :total_distance, :polyline])
     |> cast_embed(:driver)
-    |> validate_required([:total_time, :pickup_time, :delivery_time, :total_distance])
+    |> validate_required(@require_params)
   end
 
   def applied_changeset(changeset) do

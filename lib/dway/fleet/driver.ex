@@ -4,6 +4,8 @@ defmodule Dway.Fleet.Driver do
 
   alias Dway.Routing.Route
 
+  @require_params [:id, :name, :max_distance, :coordinates, :modal, :index]
+
   @fields_to_export ~w(id name modal index distance_to_delivery distance_to_pickup)a
   @derive {Jason.Encoder, only: @fields_to_export}
 
@@ -40,9 +42,9 @@ defmodule Dway.Fleet.Driver do
     attributes = parser_coordinates(attributes)
 
     driver
-    |> cast(attributes, [:id, :name, :max_distance, :coordinates, :modal, :index])
+    |> cast(attributes, @require_params)
+    |> validate_required(@require_params)
 
-    # to do - validate
   end
 
   def change_distances(%__MODULE__{} = driver, distances) do
