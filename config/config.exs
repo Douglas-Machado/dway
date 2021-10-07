@@ -11,8 +11,8 @@ config :dway,
   ecto_repos: [Dway.Repo]
 
 config :dway, Dway.Repo,
-migration_primary_key: [type: :binary_id],
-migration_foreign_key: [type: :binary_id]
+  migration_primary_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id]
 
 # Configures the endpoint
 config :dway, DwayWeb.Endpoint,
