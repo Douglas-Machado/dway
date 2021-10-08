@@ -1,6 +1,6 @@
 defmodule DwayWeb.FallbackController do
-
   alias DwayWeb.ErrorView
+
   @moduledoc """
   Translates controller action results into valid `Plug.Conn` responses.
 
@@ -8,14 +8,14 @@ defmodule DwayWeb.FallbackController do
   """
   use DwayWeb, :controller
 
-
   def call(conn, {:error, content}) do
     conn
     |> put_status(:bad_request)
     |> put_view(ErrorView)
-    |> IO.inspect( label: "CONTENT")
+    |> IO.inspect(label: "CONTENT")
     |> render("400.json", content)
   end
+
   # This clause handles errors returned by Ecto's insert/update/delete.
   # def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
   #   conn

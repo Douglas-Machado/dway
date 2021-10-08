@@ -7,31 +7,35 @@ defmodule Dway.Request do
 
   def get_params(driver, order_params) do
     order = DriverParser.parse_order_params(order_params)
-    |> IO.inspect()
+
     params =
       "#{driver.coordinates.long},#{driver.coordinates.lat};#{order.pickup_coordinates.long},#{order.pickup_coordinates.lat};#{order.delivery_coordinates.long},#{order.delivery_coordinates.lat}"
       |> request_osrm()
       |> validate_time_window(order)
 
-    Route.changeset(%Route{driver: driver.id, order_id: order.id}, params) |> Route.applied_changeset()
+    Route.changeset(%Route{order_id: order.id, driver_id: driver.id}, params)
+    |> Route.applied_changeset()
   end
 
   def request_osrm(string) do
     HTTPoison.start()
+
     with {:ok, %HTTPoison.Response{body: body}} <- HTTPoison.get(@url_docker <> string) do
-    {:ok, content} = Jason.decode(body, keys: :atoms)
-
-    content.routes
-    |> route_time_and_distance()
-    |> hd()
-    else
-      {:error, _content} -> {:ok, %HTTPoison.Response{body: body}}  = HTTPoison.get(@url <> string <> "?overview=false")
-
       {:ok, content} = Jason.decode(body, keys: :atoms)
 
-    content.routes
-    |> route_time_and_distance()
-    |> hd()
+      content.routes
+      |> route_time_and_distance()
+      |> hd()
+    else
+      {:error, _content} ->
+        {:ok, %HTTPoison.Response{body: body}} =
+          HTTPoison.get(@url <> string <> "?overview=false")
+
+        {:ok, content} = Jason.decode(body, keys: :atoms)
+
+        content.routes
+        |> route_time_and_distance()
+        |> hd()
     end
   end
 
