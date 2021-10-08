@@ -12,8 +12,8 @@ defmodule DwayWeb.FallbackController do
     conn
     |> put_status(:bad_request)
     |> put_view(ErrorView)
-    |> IO.inspect(label: "CONTENT")
-    |> render("400.json", content)
+    # |> put_resp_content_type("text/xml")
+    |> send_resp(401, content)
   end
 
   # This clause handles errors returned by Ecto's insert/update/delete.

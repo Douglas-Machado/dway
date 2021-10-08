@@ -104,6 +104,6 @@ defmodule Dway.Routing do
 
   def insert_route(route_struct) do
     route_struct
-      |> Repo.insert()
+    |> Repo.insert()
   end
 end

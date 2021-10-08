@@ -6,7 +6,14 @@ defmodule Dway.Routing.Route do
 
   @derive {Jason.Encoder, only: @fields_to_export}
 
-  @require_params [:total_time, :pickup_time, :delivery_time, :total_distance, :order_id, :driver_id]
+  @require_params [
+    :total_time,
+    :pickup_time,
+    :delivery_time,
+    :total_distance,
+    :order_id,
+    :driver_id
+  ]
 
   @primary_key {:id, :binary_id, autogenerate: true}
 

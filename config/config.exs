@@ -51,6 +51,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :dway,
+  osrm_docker: "http://127.0.0.1:5000/route/v1/driving/",
+  osrm: "http://router.project-osrm.org/route/v1/driving/"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

@@ -51,6 +51,10 @@ defmodule Dway.Fleet.Driver do
   end
 
   @spec applied_changeset(Ecto.Changeset.t()) :: %__MODULE__{}
+  def applied_changeset(%Ecto.Changeset{valid?: false}) do
+    nil
+  end
+
   def applied_changeset(changeset) do
     apply_changes(changeset)
   end
