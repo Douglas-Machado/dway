@@ -8,6 +8,7 @@ defmodule Dway.Repo.Migrations.CreateRoutes do
       add :delivery_time, :float
       add :polyline, :float
       add :total_distance, :float
+      add :order_id, :string
       add :driver_id, :string
 
       timestamps()

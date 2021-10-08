@@ -101,4 +101,9 @@ defmodule Dway.Routing do
   def change_route(%Route{} = route, attrs \\ %{}) do
     Route.changeset(route, attrs)
   end
+
+  def insert_route(route_struct) do
+    route_struct
+    |> Repo.insert()
+  end
 end

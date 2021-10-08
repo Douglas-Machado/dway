@@ -2,18 +2,24 @@ defmodule Dway.Routing.Route do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Dway.Fleet.{Driver, Order}
-
-  @fields_to_export ~w(order_id driver total_time pickup_time  delivery_time total_distance polyline)a
+  @fields_to_export ~w(order_id driver_id total_time pickup_time  delivery_time total_distance polyline)a
 
   @derive {Jason.Encoder, only: @fields_to_export}
 
-  @require_params [:total_time, :pickup_time, :delivery_time, :total_distance]
+  @require_params [
+    :total_time,
+    :pickup_time,
+    :delivery_time,
+    :total_distance,
+    :order_id,
+    :driver_id
+  ]
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
   @type t :: %__MODULE__{
-          driver: String.t(),
+          order_id: String.t(),
+          driver_id: String.t(),
           total_time: Float.t(),
           pickup_time: Float.t(),
           delivery_time: Float.t(),
@@ -27,17 +33,15 @@ defmodule Dway.Routing.Route do
     field :delivery_time, :float
     field :polyline, :string
     field :total_distance, :float
-
-    embeds_one :order_id, Order
-    embeds_one :driver, Driver
+    field :order_id, :string
+    field :driver_id, :string
     timestamps()
   end
 
   @doc false
   def changeset(%__MODULE__{} = route, attrs) do
     route
-    |> cast(attrs, [:total_time, :pickup_time, :delivery_time, :total_distance, :polyline])
-    |> cast_embed(:driver)
+    |> cast(attrs, @require_params)
     |> validate_required(@require_params)
   end
 

@@ -1,7 +1,8 @@
 {
     "router":
         {
-            "driver_id": "string (unique)",
+            "order": "string",
+            "driver": "string (unique)",
             "total_time": "integer",
             "pickup_time": "integer",
             "delivery_time": "integer",

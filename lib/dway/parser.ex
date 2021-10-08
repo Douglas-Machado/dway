@@ -1,17 +1,17 @@
 defmodule Dway.Parser do
-  alias Dway.Parser.{DriverParser, OrderParser}
+  alias Dway.Parser.OrderParser
   alias Dway.Fleet.Driver
 
   @max_distance_biker 2000
 
-  def get_driver_to_pickup_distance(drivers_params, order_params) do
-    order = DriverParser.parse_order_params(order_params)
+  def get_driver_to_pickup_distance(drivers, order) do
     order_distance = OrderParser.get_order_distance(order)
 
-    DriverParser.parse_driver_params(drivers_params)
+    drivers
     |> get_drivers_params(order, order_distance)
     |> reject_drivers_by_max_distance()
     |> order_drivers_by_modal(order_distance)
+    |> handle_response()
   end
 
   def get_drivers_params(drivers, order, order_distance) do
@@ -27,19 +27,19 @@ defmodule Dway.Parser do
     end)
   end
 
-  def order_drivers_by_modal(drivers, order_distance)
-      when order_distance <= @max_distance_biker do
+  defp order_drivers_by_modal(drivers, order_distance)
+       when order_distance <= @max_distance_biker do
     drivers
     |> Enum.sort_by(&{&1.modal, &1.distance_to_pickup, &1.index})
   end
 
-  def order_drivers_by_modal(drivers, _order_distance) do
+  defp order_drivers_by_modal(drivers, _order_distance) do
     drivers
     |> Enum.reject(fn %Driver{modal: modal} -> modal == "b" end)
     |> Enum.sort_by(&{&1.modal, &1.distance_to_pickup, &1.index})
   end
 
-  def reject_drivers_by_max_distance(drivers_list) do
+  defp reject_drivers_by_max_distance(drivers_list) do
     drivers_list
     |> Enum.reject(fn %Driver{
                         distance_to_delivery: distance_to_delivery,
@@ -47,5 +47,13 @@ defmodule Dway.Parser do
                       } ->
       distance_to_delivery > max_distance
     end)
+  end
+
+  defp handle_response([]) do
+    {:error, []}
+  end
+
+  defp handle_response(drivers) do
+    {:ok, Enum.at(drivers, 0)}
   end
 end
