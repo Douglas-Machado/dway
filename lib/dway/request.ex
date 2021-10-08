@@ -7,11 +7,11 @@ defmodule Dway.Request do
 
   def get_params(driver, order_params) do
     order = DriverParser.parse_order_params(order_params)
-
+    |> IO.inspect()
     params =
       "#{driver.coordinates.long},#{driver.coordinates.lat};#{order.pickup_coordinates.long},#{order.pickup_coordinates.lat};#{order.delivery_coordinates.long},#{order.delivery_coordinates.lat}"
       |> request_osrm()
-      |> valid_time(order_params)
+      |> validate_time_window(order)
 
     Route.changeset(%Route{driver: driver.id, order_id: order.id}, params) |> Route.applied_changeset()
   end
@@ -35,14 +35,7 @@ defmodule Dway.Request do
     end
   end
 
-  def valid_time(map, order_params) do
-    case map["total_time"] <= order_params["time_window"] do
-      true -> map
-      _ -> IO.puts("Não é possivel roteirizar")
-    end
-  end
-
-  def route_time_and_distance(route) do
+  defp route_time_and_distance(route) do
     route
     |> Enum.map(fn el ->
       %{
@@ -52,5 +45,12 @@ defmodule Dway.Request do
         "delivery_time" => Enum.at(el[:legs], 1)[:duration]
       }
     end)
+  end
+
+  def validate_time_window(map, order) do
+    case map["total_time"] <= order.time_window do
+      true -> map
+      _ -> map
+    end
   end
 end
