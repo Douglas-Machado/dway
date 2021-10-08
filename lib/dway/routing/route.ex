@@ -2,10 +2,9 @@ defmodule Dway.Routing.Route do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Dway.Fleet.Driver
+  alias Dway.Fleet.{Driver, Order}
 
-
-  @fields_to_export ~w(driver total_time pickup_time  delivery_time total_distance polyline)a
+  @fields_to_export ~w(order_id driver total_time pickup_time  delivery_time total_distance polyline)a
 
   @derive {Jason.Encoder, only: @fields_to_export}
 
@@ -29,6 +28,7 @@ defmodule Dway.Routing.Route do
     field :polyline, :string
     field :total_distance, :float
 
+    embeds_one :order_id, Order
     embeds_one :driver, Driver
     timestamps()
   end

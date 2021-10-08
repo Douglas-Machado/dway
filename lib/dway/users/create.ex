@@ -7,7 +7,7 @@ defmodule Dway.Users.Create do
     |> Repo.insert()
   end
 
-  def get(user_token) do
-    Repo.get(User, user_token)
+  def get(token) do
+    Repo.get(User, token)
   end
 end

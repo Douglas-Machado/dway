@@ -21,7 +21,6 @@ defmodule DwayWeb.RouteController do
       |> Enum.at(0)
       |> Request.get_params(route_params["order"])
 
-    # somente mostrar resultado PRECISA SER EDITADO
     conn
     |> json(driver)
 
