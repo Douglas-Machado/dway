@@ -5,8 +5,8 @@ defmodule DwayWeb do
 
   This can be used in your application as:
 
-      use ThewayWeb, :controller
-      use ThewayWeb, :view
+      use DwayWeb, :controller
+      use DwayWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
