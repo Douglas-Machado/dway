@@ -2,7 +2,7 @@ defmodule Dway.Fleet.Driver do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Dway.Routing.Route
+  @require_params [:id, :name, :max_distance, :coordinates, :modal, :index]
 
   @fields_to_export ~w(id name modal index distance_to_delivery distance_to_pickup)a
   @derive {Jason.Encoder, only: @fields_to_export}
@@ -28,8 +28,6 @@ defmodule Dway.Fleet.Driver do
     field :index, :integer
     field :distance_to_pickup, :float
     field :distance_to_delivery, :float
-
-    belongs_to :routes, Route
   end
 
   @spec changeset(
@@ -40,9 +38,9 @@ defmodule Dway.Fleet.Driver do
     attributes = parser_coordinates(attributes)
 
     driver
-    |> cast(attributes, [:id, :name, :max_distance, :coordinates, :modal, :index])
-
-    # to do - validate
+    |> cast(attributes, @require_params)
+    |> validate_required(@require_params)
+    |> validate_inclusion(:modal, ["b", "m"])
   end
 
   def change_distances(%__MODULE__{} = driver, distances) do
@@ -54,6 +52,10 @@ defmodule Dway.Fleet.Driver do
   end
 
   @spec applied_changeset(Ecto.Changeset.t()) :: %__MODULE__{}
+  def applied_changeset(%Ecto.Changeset{valid?: false}) do
+    nil
+  end
+
   def applied_changeset(changeset) do
     apply_changes(changeset)
   end

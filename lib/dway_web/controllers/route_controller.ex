@@ -3,24 +3,32 @@ defmodule DwayWeb.RouteController do
 
   alias Dway.Routing
   alias Dway.Routing.Route
+  alias Dway.Parser.{Api, DataParser}
   alias Dway.{Parser, Request}
+  alias DwayWeb.FallbackController
 
-  action_fallback DwayWeb.FallbackController
-
+  @spec index(Plug.Conn.t(), any) :: Plug.Conn.t()
   def index(conn, _params) do
     routes = Routing.list_routes()
     render(conn, "index.json", routes: routes)
   end
 
+  @spec create(Plug.Conn.t(), nil | maybe_improper_list | map) :: Plug.Conn.t()
   def create(conn, route_params) do
-    driver =
-      Parser.get_driver_to_pickup_distance(route_params["drivers"], route_params["order"])
-      |> Enum.at(0)
-      |> Request.get_params(route_params["order"])
+    with {:ok, _content} <- Api.validate(route_params["api_token"]),
+         {:ok, drivers} <- DataParser.parse_drivers_params(route_params["drivers"]),
+         {:ok, order} <- DataParser.parse_order_params(route_params["order"]),
+         {:ok, driver} <- Parser.get_driver_to_pickup_distance(drivers, order),
+         {:ok, route} <- Request.get_params(driver, order) do
+      Routing.insert_route(route)
 
-    # somente mostrar resultado PRECISA SER EDITADO
-    conn
-    |> json(driver)
+      conn
+      |> json(route)
+    else
+      {:error, message} -> FallbackController.call(conn, {:error, message})
+      {:error, []} -> FallbackController.call(conn, {:ok, :empty_drivers})
+      {:ok, nil} -> FallbackController.call(conn, {:ok, :empty_order})
+    end
 
     # with {:ok, %Route{} = route} <- Routing.create_route(route_params) do
     #   conn
