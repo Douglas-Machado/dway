@@ -48,7 +48,6 @@ defmodule Dway.Fleet.Driver do
     |> cast(distances, [:distance_to_pickup, :distance_to_delivery])
     |> applied_changeset()
 
-    # to do - validate
   end
 
   @spec applied_changeset(Ecto.Changeset.t()) :: %__MODULE__{}

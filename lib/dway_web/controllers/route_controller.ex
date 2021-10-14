@@ -7,13 +7,15 @@ defmodule DwayWeb.RouteController do
   alias Dway.{Parser, Request}
   alias DwayWeb.FallbackController
 
+  action_fallback FallbackController
+
   @spec index(Plug.Conn.t(), any) :: Plug.Conn.t()
   def index(conn, _params) do
     routes = Routing.list_routes()
     render(conn, "index.json", routes: routes)
   end
 
-  @spec create(Plug.Conn.t(), nil | maybe_improper_list | map) :: Plug.Conn.t()
+  #@spec create(Plug.Conn.t(), nil | maybe_improper_list | map) :: Plug.Conn.t()
   def create(conn, route_params) do
     with {:ok, _content} <- Api.validate(route_params["api_token"]),
          {:ok, drivers} <- DataParser.parse_drivers_params(route_params["drivers"]),
@@ -24,10 +26,10 @@ defmodule DwayWeb.RouteController do
 
       conn
       |> json(route)
-    else
-      {:error, message} -> FallbackController.call(conn, {:error, message})
-      {:error, []} -> FallbackController.call(conn, {:ok, :empty_drivers})
-      {:ok, nil} -> FallbackController.call(conn, {:ok, :empty_order})
+    # else
+    #   {:error, message} -> FallbackController.call(conn, {:error, message})
+    #   {:error, []} -> FallbackController.call(conn, {:ok, :empty_drivers})
+    #   {:ok, nil} -> FallbackController.call(conn, {:ok, :empty_order})
     end
 
     # with {:ok, %Route{} = route} <- Routing.create_route(route_params) do
