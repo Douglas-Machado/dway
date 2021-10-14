@@ -6,7 +6,7 @@ defmodule Dway.Parser.Api do
 
   def validate(token) do
     with true <- String.length(token) == 36 do
-      case Create.get(token) do
+      case Accounts.get(token) do
         %Dway.User{} -> {:ok, token}
         nil -> {:error, "Token inválido"}
       end
