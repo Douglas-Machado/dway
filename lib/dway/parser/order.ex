@@ -1,4 +1,8 @@
 defmodule Dway.Parser.OrderParser do
+  @moduledoc """
+    Calculates the distance between pickup and delivery
+  """
+
   def get_order_distance(order) do
     Haversine.distance(
       get_pickup_coord(order),
