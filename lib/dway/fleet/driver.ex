@@ -40,6 +40,7 @@ defmodule Dway.Fleet.Driver do
     driver
     |> cast(attributes, @require_params)
     |> validate_required(@require_params)
+    |> validate_inclusion(:modal, ["b", "m"])
   end
 
   def change_distances(%__MODULE__{} = driver, distances) do
