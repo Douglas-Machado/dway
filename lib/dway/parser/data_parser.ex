@@ -1,5 +1,12 @@
 defmodule Dway.Parser.DataParser do
-  alias Dway.Fleet.{Driver, Order}
+  alias Dway.Fleet.{Driver, Order, Data}
+
+  def parse_params(route_params) do
+    case Data.changeset(route_params) do
+      nil -> {:error, nil}
+      params -> {:ok, params}
+    end
+  end
 
   def parse_drivers_params(driver_params) do
     drivers =
@@ -8,7 +15,7 @@ defmodule Dway.Parser.DataParser do
       |> Enum.reject(&is_nil/1)
 
     case drivers do
-      [] -> {:error, []}
+      [] -> {:error, [], message: "Nenhum driver encontrado"}
       _ -> {:ok, drivers}
     end
   end

@@ -17,7 +17,7 @@ defmodule DwayWeb.RouteController do
 
   #@spec create(Plug.Conn.t(), nil | maybe_improper_list | map) :: Plug.Conn.t()
   def create(conn, route_params) do
-    with {:ok, _content} <- Api.validate(route_params["api_token"]),
+         with {:ok, _content} <- Api.validate(conn.path_params["id"]),
          {:ok, drivers} <- DataParser.parse_drivers_params(route_params["drivers"]),
          {:ok, order} <- DataParser.parse_order_params(route_params["order"]),
          {:ok, driver} <- Parser.get_driver_to_pickup_distance(drivers, order),
@@ -26,10 +26,10 @@ defmodule DwayWeb.RouteController do
 
       conn
       |> json(route)
-    # else
-    #   {:error, message} -> FallbackController.call(conn, {:error, message})
-    #   {:error, []} -> FallbackController.call(conn, {:ok, :empty_drivers})
-    #   {:ok, nil} -> FallbackController.call(conn, {:ok, :empty_order})
+    else
+      {:error, message} -> FallbackController.call(conn, {:error, message})
+      {:error, [], message} -> FallbackController.call(conn, {:ok, :empty_drivers, message})
+      {:ok, nil, message} -> FallbackController.call(conn, {:ok, :empty_order, message})
     end
 
     # with {:ok, %Route{} = route} <- Routing.create_route(route_params) do

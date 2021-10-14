@@ -16,7 +16,7 @@ defmodule DwayWeb.Router do
 
   scope "/api", DwayWeb do
     pipe_through :api
-    resources "/routes", RouteController, except: [:new, :edit]
+    resources "/:id/routes", RouteController, except: [:new, :edit]
   end
 
   scope "/", DwayWeb do
