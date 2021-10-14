@@ -1,6 +1,15 @@
 defmodule DwayWeb.Router do
   use DwayWeb, :router
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {DwayWeb.LayoutView, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -8,8 +17,13 @@ defmodule DwayWeb.Router do
   scope "/api", DwayWeb do
     pipe_through :api
     resources "/routes", RouteController, except: [:new, :edit]
+  end
 
-    get "/", WelcomeController, :index
+  scope "/", DwayWeb do
+    pipe_through :browser
+
+    # get "/", WelcomeController, :index
+    resources "/", UserController
   end
 
   # Enables LiveDashboard only for development
