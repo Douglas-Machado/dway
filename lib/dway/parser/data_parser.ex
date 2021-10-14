@@ -3,7 +3,14 @@ defmodule Dway.Parser.DataParser do
     Parse driver and order json into structs(embedded schema)
   """
 
-  alias Dway.Fleet.{Driver, Order}
+  alias Dway.Fleet.{Driver, Order, Data}
+
+  def parse_params(route_params) do
+    case Data.changeset(route_params) do
+      nil -> {:error, nil}
+      params -> {:ok, params}
+    end
+  end
 
   @doc """
     validate drivers params and reject driver with any nil field
@@ -15,7 +22,7 @@ defmodule Dway.Parser.DataParser do
       |> Enum.reject(&is_nil/1)
 
     case drivers do
-      [] -> {:error, []}
+      [] -> {:error, [], message: "Nenhum driver encontrado"}
       _ -> {:ok, drivers}
     end
     |> IO.inspect()

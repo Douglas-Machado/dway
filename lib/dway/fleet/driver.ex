@@ -47,8 +47,6 @@ defmodule Dway.Fleet.Driver do
     driver
     |> cast(distances, [:distance_to_pickup, :distance_to_delivery])
     |> applied_changeset()
-
-    # to do - validate
   end
 
   @spec applied_changeset(Ecto.Changeset.t()) :: %__MODULE__{}
@@ -60,11 +58,24 @@ defmodule Dway.Fleet.Driver do
     apply_changes(changeset)
   end
 
-  def parser_coordinates(%{"coordinates" => %{"long" => long, "lat" => lat}} = attributes) do
+  # # defp parser_coordinates(%{"coordinates" => %{}} = attributes) do
+  # #   Map.put(attributes, "coordinates", %{})
+  # # end
+
+  # # defp parser_coordinates(%{"coordinates" => %{"long" => _long}} = attributes) do
+  # #   Map.put(attributes, "coordinates", %{})
+  # # end
+
+  # defp parser_coordinates(%{"coordinates" => %{"lat" => _lat}} = attributes) do
+  #   Map.put(attributes, "coordinates", %{lat: nil, long: nil})
+  # end
+
+  defp parser_coordinates(%{"coordinates" => %{"long" => long, "lat" => lat}} = attributes) do
     Map.put(attributes, "coordinates", %{long: long, lat: lat})
   end
 
-  def parser_coordinates(
+
+  defp parser_coordinates(
         %{"coordinates" => %{"longitude" => long, "latitude" => lat}} = attributes
       ) do
     Map.put(attributes, "coordinates", %{long: long, lat: lat})
