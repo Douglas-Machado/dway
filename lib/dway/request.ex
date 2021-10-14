@@ -38,7 +38,7 @@ defmodule Dway.Request do
         content.routes
         |> route_time_and_distance()
         |> hd()
-      _ -> {:error, ""}
+      _ -> {:error, "Não foi possível roteirizar - OSRM indisponível"}
     end
   end
 
@@ -63,7 +63,7 @@ defmodule Dway.Request do
 
       _ ->
         {:error,
-         "Não foi possível roteirizar: Tempo da rota excedido #{total_time} #{order.time_window}"}
+         "Não foi possível roteirizar: Tempo da rota excedido. Tempo estimado: #{total_time}s Tempo máximo: #{order.time_window}s"}
     end
   end
 
