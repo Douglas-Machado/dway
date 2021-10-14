@@ -1,5 +1,8 @@
 defmodule Dway.Parser.Api do
-  alias Dway.Users.Create
+  @moduledoc """
+    Validate user token
+  """
+  alias Dway.Users.Accounts
 
   def validate(token) do
     with true <- String.length(token) == 36 do

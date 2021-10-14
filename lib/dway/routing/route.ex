@@ -1,4 +1,8 @@
 defmodule Dway.Routing.Route do
+  @moduledoc """
+    route schema
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -12,7 +16,8 @@ defmodule Dway.Routing.Route do
     :delivery_time,
     :total_distance,
     :order_id,
-    :driver_id
+    :driver_id,
+    :polyline
   ]
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -23,18 +28,18 @@ defmodule Dway.Routing.Route do
           total_time: Float.t(),
           pickup_time: Float.t(),
           delivery_time: Float.t(),
-          polyline: String.t(),
-          total_distance: Float.t()
+          total_distance: Float.t(),
+          polyline: String.t()
         }
 
   schema "routes" do
     field :total_time, :float
     field :pickup_time, :float
     field :delivery_time, :float
-    field :polyline, :string
     field :total_distance, :float
     field :order_id, :string
     field :driver_id, :string
+    field :polyline, :string
     timestamps()
   end
 
