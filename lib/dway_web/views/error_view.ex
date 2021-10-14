@@ -1,6 +1,10 @@
 defmodule DwayWeb.ErrorView do
   use DwayWeb, :view
 
+  import Ecto.Changeset, only: [traverse_errors: 2]
+
+  alias Ecto.Changeset
+
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
   # def render("500.json", _assigns) do
@@ -14,8 +18,12 @@ defmodule DwayWeb.ErrorView do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
 
+  # def render("400.json", %{result: %Changeset{} = changeset}) do
+  # %{message: translate_errors(changeset)}
+  # end
+
   def render("401.json", %{content: content}) do
-  %{message: content}
+    %{message: content}
   end
 
   def render("404.json", %{content: content}) do
@@ -26,4 +34,11 @@ defmodule DwayWeb.ErrorView do
     %{message: content}
   end
 
+  # defp translate_errors(changeset)do
+  #   traverse_errors(changeset, fn {msg, opts} ->
+  #     Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+  #       opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+  #     end)
+  #   end)
+  # end
 end

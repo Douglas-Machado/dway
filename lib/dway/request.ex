@@ -5,7 +5,6 @@ defmodule Dway.Request do
   @osrm Application.get_env(:dway, :osrm)
 
   def get_params(driver, order) do
-
     case request(driver, order) do
       {:ok, map} ->
         route =
@@ -38,7 +37,9 @@ defmodule Dway.Request do
         content.routes
         |> route_time_and_distance()
         |> hd()
-      _ -> {:error, "Não foi possível roteirizar - OSRM indisponível"}
+
+      _ ->
+        {:error, "Não foi possível roteirizar - OSRM indisponível"}
     end
   end
 
