@@ -4,14 +4,6 @@ defmodule Dway.Parser.DataParser do
   """
 
   alias Dway.Fleet.{Driver, Order, Data}
-
-  def parse_params(route_params) do
-    case Data.changeset(route_params) do
-      nil -> {:error, nil}
-      params -> {:ok, params}
-    end
-  end
-
   @doc """
     validate drivers params and reject driver with any nil field
   """
