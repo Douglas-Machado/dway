@@ -1,4 +1,7 @@
 defmodule DwayWeb.UserController do
+  @moduledoc """
+    User controller rendering the pages to user register
+  """
   use DwayWeb, :controller
 
   alias Dway.User

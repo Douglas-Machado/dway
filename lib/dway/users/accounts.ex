@@ -1,4 +1,8 @@
 defmodule Dway.Users.Accounts do
+  @moduledoc """
+    The user context.
+  """
+
   alias Dway.{Repo, User}
 
   def call(params \\ %{}) do
@@ -21,5 +25,6 @@ defmodule Dway.Users.Accounts do
   defp handle_insert({:error, result}) do
     {:error, %{status: :bad_request, result: result}}
   end
+
 
 end
