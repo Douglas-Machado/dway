@@ -1,4 +1,8 @@
 defmodule DwayWeb.RouteController do
+  @moduledoc """
+    The entry point of application
+  """
+
   use DwayWeb, :controller
 
   alias Dway.Routing
@@ -15,6 +19,14 @@ defmodule DwayWeb.RouteController do
     render(conn, "index.json", routes: routes)
   end
 
+  @doc """
+    Returns the route json if all conditions match
+
+    ## params
+
+    *conn
+    *route_params - json with driver and order params
+  """
   #@spec create(Plug.Conn.t(), nil | maybe_improper_list | map) :: Plug.Conn.t()
   def create(conn, route_params) do
          with {:ok, _content} <- Api.validate(conn.path_params["id"]),

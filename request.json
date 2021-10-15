@@ -22,6 +22,7 @@
     ],
     "order": {
         "id":"string (unique)",
+        "customer_name": "string",
         "time_window": "float",
         "skill": "string",
         "pickup": {
@@ -35,8 +36,7 @@
             "coordinates":{
                 "long": "float",
                 "lat": "float"
-            },
-            "customer_name": "string"
+            }
         }
     }
 }
