@@ -1,4 +1,8 @@
 defmodule Dway.Users.Accounts do
+  @moduledoc """
+    The user context.
+  """
+
   alias Dway.{Repo, User}
 
   def call(params \\ %{}) do
@@ -14,5 +18,4 @@ defmodule Dway.Users.Accounts do
   def change_user(%User{} = _user, attrs \\ %{}) do
     User.changeset(attrs)
   end
-
 end
