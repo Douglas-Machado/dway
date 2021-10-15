@@ -6,7 +6,7 @@ defmodule Dway.Fleet.OrderTest do
 
   describe "changeset/2" do
     test "when all params are valid, returns a valid changeset" do
-      order=  %Dway.Fleet.Order{
+      order = %Dway.Fleet.Order{
         customer_name: nil,
         delivery_coordinates: nil,
         id: nil,
@@ -35,11 +35,11 @@ defmodule Dway.Fleet.OrderTest do
 
       response = Order.changeset(order, attributes)
 
-    assert %Changeset{changes: %{customer_name: "Theodora"}, valid?: true} = response
+      assert %Changeset{changes: %{customer_name: "Theodora"}, valid?: true} = response
     end
 
     test "when there are some error, returns a invalid changeset" do
-      order=  %Dway.Fleet.Order{
+      order = %Dway.Fleet.Order{
         customer_name: nil,
         delivery_coordinates: nil,
         id: nil,
@@ -71,8 +71,6 @@ defmodule Dway.Fleet.OrderTest do
       expected_response = %{time_window: ["can't be blank"]}
 
       assert errors_on(response) == expected_response
-      end
-
     end
-
+  end
 end

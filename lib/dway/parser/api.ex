@@ -14,7 +14,6 @@ defmodule Dway.Parser.Api do
       :error -> {:error, %{status: :bad_request, result: "Invalid ID format"}}
       {:ok, uuid} -> get(uuid)
     end
-
   end
 
   defp get(token) do

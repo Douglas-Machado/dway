@@ -44,11 +44,11 @@ defmodule Dway.Request do
   def request_osrm(string) do
     HTTPoison.start()
 
-    with {:ok, %HTTPoison.Response{body: body}} <- HTTPoison.get(@osrm_docker <> string <> "?geometries=polyline") do
+    with {:ok, %HTTPoison.Response{body: body}} <-
+           HTTPoison.get(@osrm_docker <> string <> "?geometries=polyline") do
       {:ok, content} = Jason.decode(body, keys: :atoms)
 
       content.routes
-
       |> route_time_and_distance()
       |> hd()
     else

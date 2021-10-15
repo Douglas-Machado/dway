@@ -10,13 +10,17 @@ defmodule DwayWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :auth_api do
+    plug DwayWeb.AuthenticationPlug
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/api", DwayWeb do
-    pipe_through :api
-    resources "/:id/routes", RouteController, except: [:new, :edit]
+    pipe_through [:api, :auth_api]
+    post "/routes", RouteController, :create
   end
 
   scope "/", DwayWeb do
