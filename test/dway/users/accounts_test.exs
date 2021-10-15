@@ -10,19 +10,19 @@ defmodule Dway.Users.AccountsTest do
 
       response = Accounts.call(params)
 
-    assert {:ok, %User{id: _id, email: "stefano@madagascar.com"}} = response
+      assert {:ok, %User{id: _id, email: "stefano@madagascar.com"}} = response
     end
 
     test "when there is an error, returns an error" do
       params = %{email: "doug as 3"}
 
       response = Accounts.call(params)
-      {:error, result: changeset} = response
 
-      expected_response =  %{email: ["E-mail deve possuir @ e não conter espaços"]}
+      expected_response = %{email: ["E-mail deve possuir @ e não conter espaços"]}
+
+      assert {:error, %{status: :bad_request, result: changeset}} = response
 
       assert errors_on(changeset) == expected_response
-      end
-
     end
   end
+end

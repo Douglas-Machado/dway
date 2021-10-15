@@ -10,7 +10,7 @@ defmodule Dway.UserTest do
 
       response = User.changeset(params)
 
-    assert %Changeset{changes: %{email: "manara@d.com"}, valid?: true} = response
+      assert %Changeset{changes: %{email: "manara@d.com"}, valid?: true} = response
     end
 
     test "when there is an error, returns an invalid changeset" do
@@ -21,8 +21,6 @@ defmodule Dway.UserTest do
       expected_response = %{email: ["E-mail deve possuir @ e não conter espaços"]}
 
       assert errors_on(response) == expected_response
-      end
-
     end
-
+  end
 end

@@ -4,6 +4,7 @@ defmodule Dway.Parser.DataParser do
   """
 
   alias Dway.Fleet.{Driver, Order, Data}
+
   @doc """
     validate drivers params and reject driver with any nil field
   """
@@ -17,7 +18,6 @@ defmodule Dway.Parser.DataParser do
       [] -> {:error, [], message: "Nenhum driver encontrado"}
       _ -> {:ok, drivers}
     end
-
   end
 
   @doc """

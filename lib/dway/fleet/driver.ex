@@ -58,26 +58,27 @@ defmodule Dway.Fleet.Driver do
     apply_changes(changeset)
   end
 
-  # # defp parser_coordinates(%{"coordinates" => %{}} = attributes) do
-  # #   Map.put(attributes, "coordinates", %{})
-  # # end
+  defp parser_coordinates(%{"coordinates" => coordinates} = attributes)
+       when coordinates in [nil, %{}] do
+    Map.put(attributes, "coordinates", nil)
+  end
 
-  # # defp parser_coordinates(%{"coordinates" => %{"long" => _long}} = attributes) do
-  # #   Map.put(attributes, "coordinates", %{})
-  # # end
-
-  # defp parser_coordinates(%{"coordinates" => %{"lat" => _lat}} = attributes) do
-  #   Map.put(attributes, "coordinates", %{lat: nil, long: nil})
-  # end
+  defp parser_coordinates(%{"coordinates" => %{"long" => long, "lat" => lat}} = attributes)
+       when long == nil or lat == nil do
+    Map.put(attributes, "coordinates", nil)
+  end
 
   defp parser_coordinates(%{"coordinates" => %{"long" => long, "lat" => lat}} = attributes) do
     Map.put(attributes, "coordinates", %{long: long, lat: lat})
   end
 
-
   defp parser_coordinates(
-        %{"coordinates" => %{"longitude" => long, "latitude" => lat}} = attributes
-      ) do
+         %{"coordinates" => %{"longitude" => long, "latitude" => lat}} = attributes
+       ) do
     Map.put(attributes, "coordinates", %{long: long, lat: lat})
+  end
+
+  defp parser_coordinates(%{"coordinates" => _} = attributes) do
+    Map.put(attributes, "coordinates", nil)
   end
 end
