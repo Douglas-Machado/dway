@@ -8,7 +8,6 @@ An elixir project using phoenix framework(1.6.0-rc.0) to find the best driver to
 * [Haversine](https://github.com/pkinney/distance)
 * [HTTPoison](https://github.com/edgurgel/httpoison)
 
-
 ## Getting started
 
 To start your Phoenix server:
@@ -18,17 +17,21 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-  ## Sign up
+  ### Sign up
 
 At the homepage, you will able to register your email and get your API key(token) to make requests to Dway API.
 
- ## Requests
+ ## REQUEST
 
-Using Insomnia or Postman make the example request below:
+Using an api client like Insomnia or Postman make the example request below:
 
-  [`localhost:4000/api/YOUR-API-KEY/routes`](http://localhost:4000/YOUR-API-KEY/routes)
+  ### Header
 
-  #### POST
+  Key: `authentication`, Value: `YOUR-API-KEY`
+
+  [`localhost:4000/api/routes`](http://localhost:4000/routes)
+
+  ### POST
 
   ```JSON
   {
@@ -71,32 +74,35 @@ Using Insomnia or Postman make the example request below:
     }
 }
 ```
+  ### Required fields
+ In case that any field of driver is missing, invalid or nil, the application will not consider this driver.
+ Case any field of delivery is missing or nil, the application will not execute
 
-  ### Drivers Fields
+  ### Drivers
 
-`id`: represent the id(unique) of the driver
+`id`: represents the identification number(unique) of the driver
 
-`name`: driver name
+`name`: driver's name
 
 `max_distance`: the max distance the driver will accept deliveries
 
 `coordinates`: `long` or `longitude` and `lat` or `latitude` are the coordinates of the driver
 
-`modal`: the vehicle type of the driver wich is `"b"` to bike or `"m"` to motocycle
+`modal`: the vehicle type of the driver wich is `"b"` for bike or `"m"` for motocycle
 
-`index`: the position of the driver in the list, case two drivers are in the same position, the chosen driver is the one with the lowest index.
+`index`: the position of the driver in the list, case two drivers are in the same space, the chosen driver is the one with the lowest index.
 
-  ### Order Fields
+  ### Order
 
-`id`: represent the id(unique) of the order
+`id`: represents the id(unique) of the order
 
-`time_window`: max time to pickup and delivery in seconds
+`time_window`: maximum time to pickup and delivery in seconds
 
 `pickup`: the coordinates of pickup, same as the `driver` coordinates
 
 `delivery`: the coordinates of delivery
 
-  #### RESPONSE
+  ### RESPONSE
 
   ```JSON
   {
@@ -110,7 +116,23 @@ Using Insomnia or Postman make the example request below:
   }
 ```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+ ### Route
+
+ `order_id`: represent the id(unique) of the order
+
+`driver_id`: represent the id(unique) of the driver
+
+`total_time`: total time(pickup and delivery) in seconds
+
+`pickup_time`: pickup time in seconds
+
+`delivery_time`: delivery time in seconds
+
+`total_distance`: the total distance between driver, pickup and delivery
+
+`polyline`: an string that represents the polyline
+
+  [polyline on google maps](https://developers.google.com/maps/documentation/utilities/polylineutility)
 
 ## Learn more
 
