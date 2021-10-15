@@ -25,7 +25,7 @@ defmodule Dway.Parser.DataParser do
       [] -> {:error, [], message: "Nenhum driver encontrado"}
       _ -> {:ok, drivers}
     end
-    |> IO.inspect()
+
   end
 
   @doc """

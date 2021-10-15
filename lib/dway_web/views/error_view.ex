@@ -1,9 +1,9 @@
 defmodule DwayWeb.ErrorView do
   use DwayWeb, :view
 
-  import Ecto.Changeset, only: [traverse_errors: 2]
+  # import Ecto.Changeset, only: [traverse_errors: 2]
 
-  alias Ecto.Changeset
+  # alias Ecto.Changeset
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
