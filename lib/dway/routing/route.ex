@@ -23,8 +23,8 @@ defmodule Dway.Routing.Route do
   @primary_key {:id, :binary_id, autogenerate: true}
 
   @type t :: %__MODULE__{
-          order_id: String.t(),
-          driver_id: String.t(),
+          order_id: Integer.t(),
+          driver_id: Integer.t(),
           total_time: Float.t(),
           pickup_time: Float.t(),
           delivery_time: Float.t(),
@@ -38,7 +38,7 @@ defmodule Dway.Routing.Route do
     field :delivery_time, :float
     field :total_distance, :float
     field :order_id, :string
-    field :driver_id, :string
+    field :driver_id, :integer
     field :polyline, :string
     timestamps()
   end

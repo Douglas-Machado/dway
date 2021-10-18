@@ -13,7 +13,10 @@ defmodule Dway.Parser.DataParser do
   def parse_drivers_params(driver_params) do
     drivers =
       driver_params
-      |> Enum.map(fn param -> Driver.changeset(%Driver{}, param) |> Driver.applied_changeset() end)
+      |> Enum.map(fn param ->
+        Driver.changeset(%Driver{}, param)
+        |> Driver.applied_changeset()
+      end)
       |> Enum.reject(&is_nil/1)
 
     case drivers do
@@ -29,7 +32,7 @@ defmodule Dway.Parser.DataParser do
   """
   def parse_order_params(order_params) do
     case Order.changeset(%Order{}, order_params) |> Order.applied_changeset() do
-      nil -> {:error, nil}
+      nil -> {:error, "dados da entrega inválidos"}
       order -> {:ok, order}
     end
   end
