@@ -32,7 +32,6 @@ defmodule Dway.Request do
         route =
           Route.changeset(%Route{order_id: order.id, driver_id: driver.id}, map)
           |> Route.applied_changeset()
-          |> IO.inspect(label: "a")
 
         {:ok, route}
 
@@ -64,7 +63,6 @@ defmodule Dway.Request do
         {:ok, content} = Jason.decode(body, keys: :atoms)
 
         content.routes
-        |> IO.inspect(label: "OLA")
         |> route_time_and_distance()
         |> hd()
 

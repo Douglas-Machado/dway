@@ -15,7 +15,6 @@ defmodule Dway.Parser.DataParser do
       driver_params
       |> Enum.map(fn param ->
         Driver.changeset(%Driver{}, param)
-        |> IO.inspect(label: "aaa")
         |> Driver.applied_changeset()
       end)
       |> Enum.reject(&is_nil/1)
