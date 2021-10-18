@@ -10,6 +10,12 @@ defmodule Dway.Parser do
 
   @doc """
     Return the driver at first index of the list, else return an error with an empty list
+
+    ## params a list drivers structs and the order struct
+
+    this function will first calculate the distancies to pickup and delivery from each driver,
+    reject the drivers which have a maximum distance smaller than the order total distance;
+    then it sort the list of drivers by modal, distance to pickup and index.
   """
   def get_driver_to_pickup_distance(drivers, order) do
     order_distance = OrderParser.get_order_distance(order)

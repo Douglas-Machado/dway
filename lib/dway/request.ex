@@ -21,6 +21,10 @@ defmodule Dway.Request do
       "total_distance": "float",
       "polyline": "string"
     }
+
+    this function will make a request to osrm api and in case of sucess,
+    it will validate if the route total time is greater than delivery maximum time and
+    then insert the values in the %Route{}, else will show an error and its reason.
   """
   def get_params(driver, order) do
     case request(driver, order) do
