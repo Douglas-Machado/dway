@@ -1,11 +1,28 @@
 defmodule Dway.Parser.Api do
-  alias Dway.Users.Create
+  @moduledoc """
+    Validate user token UUID
+  """
 
+  alias Dway.Users.Accounts
+  alias Ecto.UUID
+
+  @doc """
+    returns a tuple {:ok, token} if is a valid UUID and if the user exists in the database
+
+    iex(1)> Dway.Parser.Api.validate(YOUR-API-KEY)
+    {:ok, YOUR-API-KEY}
+  """
   def validate(token) do
-    case Create.get(token) do
+    case UUID.cast(token) do
+      :error -> {:error, %{status: :bad_request, result: "Invalid ID format"}}
+      {:ok, uuid} -> get(uuid)
+    end
+  end
+
+  defp get(token) do
+    case Accounts.get(token) do
+      nil -> {:error, %{status: :not_found, result: "User not found!"}}
       %Dway.User{} -> {:ok, token}
-      nil -> {:error, "Token inválido"}
-      _ -> {:error, "erro para o douglas"}
     end
   end
 end

@@ -1,8 +1,12 @@
 defmodule Dway.Routing.Route do
+  @moduledoc """
+    route schema
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
-  @fields_to_export ~w(order_id driver_id total_time pickup_time  delivery_time total_distance polyline)a
+  @fields_to_export ~w(order_id driver_id total_time pickup_time delivery_time total_distance polyline)a
 
   @derive {Jason.Encoder, only: @fields_to_export}
 
@@ -12,29 +16,30 @@ defmodule Dway.Routing.Route do
     :delivery_time,
     :total_distance,
     :order_id,
-    :driver_id
+    :driver_id,
+    :polyline
   ]
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
   @type t :: %__MODULE__{
-          order_id: String.t(),
-          driver_id: String.t(),
+          order_id: Integer.t(),
+          driver_id: Integer.t(),
           total_time: Float.t(),
           pickup_time: Float.t(),
           delivery_time: Float.t(),
-          polyline: String.t(),
-          total_distance: Float.t()
+          total_distance: Float.t(),
+          polyline: String.t()
         }
 
   schema "routes" do
     field :total_time, :float
     field :pickup_time, :float
     field :delivery_time, :float
-    field :polyline, :string
     field :total_distance, :float
     field :order_id, :string
-    field :driver_id, :string
+    field :driver_id, :integer
+    field :polyline, :string
     timestamps()
   end
 
