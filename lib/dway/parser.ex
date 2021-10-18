@@ -63,7 +63,7 @@ defmodule Dway.Parser do
   end
 
   defp handle_response([]) do
-    {:error, []}
+    {:error, "Sem drivers disponíveis"}
   end
 
   defp handle_response(drivers) do

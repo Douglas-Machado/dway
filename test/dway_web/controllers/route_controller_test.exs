@@ -2,7 +2,7 @@ defmodule DwayWeb.RouteControllerTest do
   use DwayWeb.ConnCase
 
   setup do
-    {:ok, user} = Dway.Users.Accounts.call(%{email: "manara@d.com"})
+    {:ok, user} = Dway.Users.Accounts.call(%{email: "judite@d.com"})
 
     conn =
       put_req_header(
@@ -106,7 +106,7 @@ defmodule DwayWeb.RouteControllerTest do
           },
           %{
             "coordinates" => %{
-              "long" => -44.093416921900584
+              "lat" => -22.508229883387585
             },
             "id" => "2",
             "index" => "1",
