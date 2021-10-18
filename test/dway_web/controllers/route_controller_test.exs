@@ -151,8 +151,8 @@ defmodule DwayWeb.RouteControllerTest do
         conn
         |> post(Routes.route_path(conn, :create), params)
         |> json_response(:bad_request)
-      assert response == %{"errors" => %{"detail" => "Bad Request"}}
 
+      assert response == %{"errors" => %{"detail" => "Bad Request"}}
     end
   end
 end

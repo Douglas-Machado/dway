@@ -12,7 +12,7 @@ defmodule Dway.Fleet.Driver do
   @derive {Jason.Encoder, only: @fields_to_export}
 
   @type t :: %__MODULE__{
-          id: String.t(),
+          id: Integer.t(),
           name: String.t(),
           max_distance: Integer.t(),
           coordinates: map(),
@@ -24,7 +24,7 @@ defmodule Dway.Fleet.Driver do
 
   @primary_key false
   embedded_schema do
-    field :id, :string
+    field :id, :integer
     field :name, :string
     field :max_distance, :integer
     field :coordinates, :map
@@ -81,7 +81,19 @@ defmodule Dway.Fleet.Driver do
   end
 
   defp parser_coordinates(%{"coordinates" => %{"long" => long, "lat" => lat}} = attributes) do
-    Map.put(attributes, "coordinates", %{long: long, lat: lat})
+    with true <- is_float(long),
+         true <- is_float(lat) do
+      Map.put(attributes, "coordinates", %{long: long, lat: lat})
+    else
+      false -> Map.put(attributes, "coordinates", nil)
+    end
+  end
+
+  defp parser_coordinates(
+         %{"coordinates" => %{"longitude" => long, "latitude" => lat}} = attributes
+       )
+       when long == nil or lat == nil do
+    Map.put(attributes, "coordinates", nil)
   end
 
   defp parser_coordinates(
@@ -91,6 +103,10 @@ defmodule Dway.Fleet.Driver do
   end
 
   defp parser_coordinates(%{"coordinates" => _} = attributes) do
+    Map.put(attributes, "coordinates", nil)
+  end
+
+  defp parser_coordinates(_ = attributes) do
     Map.put(attributes, "coordinates", nil)
   end
 end
