@@ -106,7 +106,6 @@ defmodule DwayWeb.RouteControllerTest do
           },
           %{
             "coordinates" => %{
-              "long" => -44.093416921900584,
               "lat" => -22.508229883387585
             },
             "id" => "2",
