@@ -1,4 +1,8 @@
 defmodule Dway.Fleet.Driver do
+  @moduledoc """
+    Driver schema and validations
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -43,12 +47,20 @@ defmodule Dway.Fleet.Driver do
     |> validate_inclusion(:modal, ["b", "m"])
   end
 
+  @doc """
+    cast distance to pickup and distance to delievery to driver struct
+
+    ## params (driver struct, %{distance_to_pickup: distance_to_pickup, distance_to_delivery: distance_to_delivery})
+  """
   def change_distances(%__MODULE__{} = driver, distances) do
     driver
     |> cast(distances, [:distance_to_pickup, :distance_to_delivery])
     |> applied_changeset()
   end
 
+  @doc """
+    case %Ecto.Changeset{} has any invalid or empty field, it will returns nil
+  """
   @spec applied_changeset(Ecto.Changeset.t()) :: %__MODULE__{}
   def applied_changeset(%Ecto.Changeset{valid?: false}) do
     nil

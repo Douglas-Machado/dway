@@ -1,4 +1,8 @@
 defmodule Dway.Fleet.Order do
+  @moduledoc """
+    Order schema and validations
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -32,6 +36,14 @@ defmodule Dway.Fleet.Order do
     order
     |> cast(attributes, @require_params)
     |> validate_required(@require_params)
+  end
+
+  @doc """
+    case %Ecto.Changeset{} has any invalid or empty field, it will returns nil
+  """
+  @spec applied_changeset(Ecto.Changeset.t()) :: nil | map
+  def applied_changeset(%Ecto.Changeset{valid?: false}) do
+    nil
   end
 
   def applied_changeset(changeset) do
