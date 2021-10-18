@@ -28,6 +28,7 @@ defmodule Dway.Users.Accounts do
   defp handle_insert({:ok, %User{} = result}), do: {:ok, %User{} = result}
 
   defp handle_insert({:error, result}) do
+    IO.inspect(result, label: "RESUUUUUUUUUULT")
     {:error, %{status: :bad_request, result: result}}
   end
 end
