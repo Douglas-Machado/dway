@@ -1,6 +1,6 @@
 defmodule Dway.Parser.Api do
   @moduledoc """
-    Validate user token
+    Validate user token UUID
   """
 
   alias Dway.Users.Accounts
@@ -8,6 +8,9 @@ defmodule Dway.Parser.Api do
 
   @doc """
     returns a tuple {:ok, token} if is a valid UUID and if the user exists in the database
+
+    iex(1)> Dway.Parser.Api.validate(YOUR-API-KEY)
+    {:ok, YOUR-API-KEY}
   """
   def validate(token) do
     case UUID.cast(token) do

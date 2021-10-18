@@ -7,6 +7,8 @@ defmodule Dway.Parser.DataParser do
 
   @doc """
     validate drivers params and reject driver with any nil field
+
+    returns a list of structs(%Driver{})
   """
   def parse_drivers_params(driver_params) do
     drivers =
@@ -21,7 +23,9 @@ defmodule Dway.Parser.DataParser do
   end
 
   @doc """
-  validate order
+    validate order params
+
+    returns an order struct
   """
   def parse_order_params(order_params) do
     case Order.changeset(%Order{}, order_params) |> Order.applied_changeset() do

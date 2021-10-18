@@ -1,12 +1,21 @@
 # Dway
 
-An elixir project using phoenix framework(1.6.0-rc.0) to find the best driver to delivery an order, according to the company Service Level Agreement.
+An elixir project using phoenix framework(1.6.0-rc.0) to find the best driver to delivery an order according to the company Service Level Agreement.
 
 ## Libraries used
 
 * [Jason](https://github.com/michalmuskala/jason)
 * [Haversine](https://github.com/pkinney/distance)
 * [HTTPoison](https://github.com/edgurgel/httpoison)
+
+## osrm/osrm-backend
+  High performance routing engine written in C++14 designed to run on OpenStreetMap data. This api offers some services but in this project it only uses route service, that finds the fastest route between coordinates
+
+  see more in:
+
+* [OSRM](http://project-osrm.org/docs/v5.5.1/api/#general-options)
+
+* [OSRM-DOCKER](https://hub.docker.com/r/osrm/osrm-backend/)
 
 ## Getting started
 
@@ -23,7 +32,13 @@ At the homepage, you will able to register your email and get your API key(token
 
  ## REQUEST
 
-Using an api client like Insomnia or Postman make the example request below:
+  #### Warning
+
+  if you prefer to run this application with osrm-docker, checkout the osrm-backend documentation and download the map at [Geofabrik](http://download.geofabrik.de/)
+
+  using without docker, you can send `one` request per `five` seconds
+
+  Using an api client like Insomnia or Postman make the example request below:
 
   ### Header
 

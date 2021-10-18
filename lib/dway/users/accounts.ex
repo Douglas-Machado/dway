@@ -5,6 +5,11 @@ defmodule Dway.Users.Accounts do
 
   alias Dway.{Repo, User}
 
+  @doc """
+    User registration
+
+    ## params %{email: user_email}
+  """
   def call(params \\ %{}) do
     params
     |> User.changeset()

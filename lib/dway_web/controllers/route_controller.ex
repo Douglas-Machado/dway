@@ -20,6 +20,12 @@ defmodule DwayWeb.RouteController do
 
     *conn
     *route_params - json with driver and order params
+
+    The route params will be validated and parsed to structs %Order{} and %Driver{},
+    then the list of drivers will be sorted, and the best driver will be selected.
+    After that we were able to make a request to OSRM and insert the data in the struct %Route{}.
+    Finally it is possible to save the struct %Route{} in the database and
+    show the user the JSON with the final result.
   """
   # @spec create(Plug.Conn.t(), nil | maybe_improper_list | map) :: Plug.Conn.t()
   def create(conn, route_params) do

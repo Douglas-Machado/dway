@@ -1,6 +1,6 @@
 defmodule DwayWeb.AuthenticationPlug do
   @moduledoc """
-
+    Validate header key by user token
   """
   import Plug.Conn
 
@@ -10,19 +10,17 @@ defmodule DwayWeb.AuthenticationPlug do
 
   def init(default), do: default
 
+  @doc """
+    validação da chave e valor passados no header.
+
+    em caso de sucesso retorna a conexão;
+    em caso de erro retorna :unauthorized.
+  """
   def call(conn, _opts) do
     conn
     |> get_admin_token_header()
     |> authorize_admin()
     |> maybe_stop_request(conn)
-  end
-
-  defp maybe_stop_request(true = _authorized, conn), do: conn
-
-  defp maybe_stop_request(false = _authorized, conn) do
-    conn
-    |> send_resp(:unauthorized, "Unauthorized")
-    |> halt
   end
 
   defp authorize_admin(token_header_value) do
@@ -36,5 +34,13 @@ defmodule DwayWeb.AuthenticationPlug do
     conn
     |> get_req_header(@token_header_key)
     |> List.first()
+  end
+
+  defp maybe_stop_request(true = _authorized, conn), do: conn
+
+  defp maybe_stop_request(false = _authorized, conn) do
+    conn
+    |> send_resp(:unauthorized, "Unauthorized")
+    |> halt
   end
 end
