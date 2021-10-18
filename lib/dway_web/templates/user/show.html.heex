@@ -1,10 +1,17 @@
-<h1>Usuário cadastrado</h1>
+<header class="container">
+  <div class="content created-user">
+    <h1>Usuário cadastrado</h1>
 
-<ul>
+    <ul class ="show-user-token">
 
-  <li>
-    <strong>token</strong>
-    <%= @user.id %>
-  </li>
+      <li>
+        <strong>token:</strong>
+        <%= @user.id %>
+      </li>
+      
+    </ul>
 
-</ul>
+    <h3> <span>ATENÇÃO</span> Salve seu token, ele será necessário para utilizar a API. </h3>
+
+  </div>
+</header>

@@ -7,6 +7,8 @@ defmodule DwayWeb.UserController do
   alias Dway.User
   alias Dway.Users.Accounts
 
+  action_fallback FallbackController
+
   def index(conn, _params) do
     render(conn, "index.html")
   end
@@ -23,7 +25,7 @@ defmodule DwayWeb.UserController do
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: Routes.user_path(conn, :show, user))
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, %{status: :bad_request, result: changeset}} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
