@@ -1,38 +1,38 @@
-<div class="routes">
-    <div class="item-column">
-        <h4 class="item-title">Número do pedido</h4>
-        <%= for routes <- @routes do %>
-            <p class="item"><%=  routes.order_id%></p>
-        <% end %>
+<div class="container">
+    <div class="dashboard">
+        <h1 class="dashboard-title">DASHBOARD</h1>
+        <span class="link-register"><%= link "cadastre seu email", to: Routes.user_path(@conn, :new) %></span>
     </div>
-    <div class="item-column">
-        <h4 class="item-title">Entregador(ID)</h4>
-        <%= for routes <- @routes do %>
-            <p class="item"><%=  routes.driver_id%></p>
-        <% end %>
-    </div>
-    <div class="item-column">
-        <h4 class="item-title">Tempo estimado da entrega (segundos)</h4>
-        <%= for routes <- @routes do %>
-                <p class="item"><%=  routes.total_time%></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID Pedido</th>
+                <th scope="col">ID Driver</th>
+                <th scope="col">Tempo total</th>
+                <th scope="col">Modal</th>
+                <th scope="col">Tempo da coleta</th>
+                <th scope="col">Tempo da entrega</th>
+                <th scope="col">Distância total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%= for route <- @routes do %>
+                <tr>
+                    <th scope="row"><%= route.driver_id %></th>
+                    <td><%= route.order_id %></td>
+                    <td><%= Float.round(route.total_time/60,1) %></td>
+                    <td>
+                        <%= if route.modal == "b" do %>
+                            <img class="modal-img" src={Routes.static_path(@conn, "/images/bike.png")} alt="bike logo"/>
+                        <% else %>
+                            <img class="modal-img" src={Routes.static_path(@conn, "/images/motorcycle.png")} alt="motorcycle logo"/>
+                        <% end %>
+                    </td>
+                    <td><%= Float.round(route.pickup_time/60,1)%></td>
+                    <td><%= Float.round(route.delivery_time/60,1) %></td>
+                    <td><%= Float.round(route.total_distance/1000,1) %></td>
             <% end %>
-    </div>
-    <div class="item-column">
-        <h4 class="item-title">Tempo até a coleta (segundos)</h4>
-        <%= for routes <- @routes do %>
-                <p class="item"><%=  routes.pickup_time%></p>
-            <% end %>
-    </div>
-    <div class="item-column">
-        <h4 class="item-title">Tempo até a entrega</h4>
-        <%= for routes <- @routes do %>
-                <p class="item"><%=  routes.delivery_time%></p>
-            <% end %>
-    </div>
-    <div class="item-column">
-        <h4 class="item-title">Distância total (metros)</h4>
-        <%= for routes <- @routes do %>
-                <p class="item"><%=  routes.total_distance%></p>
-            <% end %>
-    </div>
+        </tbody>
+    </table>
 </div>
