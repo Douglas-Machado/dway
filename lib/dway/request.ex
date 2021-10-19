@@ -25,6 +25,12 @@ defmodule Dway.Request do
     this function will make a request to osrm api and in case of sucess,
     it will validate if the route total time is greater than delivery maximum time and
     then insert the values in the %Route{}, else will show an error and its reason.
+
+     ## OSRM
+
+     Returns a map with osrm response body
+
+     fields: distance, duration and polyline
   """
   def get_params(driver, order) do
     case request(driver, order) do
@@ -40,11 +46,6 @@ defmodule Dway.Request do
     end
   end
 
-  @doc """
-    Returns a map with osrm response body
-
-    fields: distance, duration and polyline
-  """
   def request_osrm(string) do
     HTTPoison.start()
 

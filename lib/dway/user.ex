@@ -14,6 +14,13 @@ defmodule Dway.User do
     timestamps()
   end
 
+  @doc """
+    validating user e-mail(unique)
+
+    email must have an '@' and don't have any white spaces
+    min length: 3
+    max length: 160
+  """
   def changeset(params) do
     %__MODULE__{}
     |> cast(params, [:email])
