@@ -2,7 +2,7 @@ defmodule DwayWeb.RouteControllerTest do
   use DwayWeb.ConnCase
 
   setup do
-    {:ok, user} = Dway.Users.Accounts.call(%{email: "judite@d.com"})
+    {:ok, user} = Dway.Accounts.call(%{email: "judite@d.com"})
 
     conn =
       put_req_header(
@@ -23,8 +23,8 @@ defmodule DwayWeb.RouteControllerTest do
               "lat" => -22.513476978859,
               "long" => -44.091791768114874
             },
-            "id" => "1",
-            "index" => "2",
+            "id" => 1,
+            "index" => 2,
             "max_distance" => 2000,
             "modal" => "b",
             "name" => "Julio de Jundiai",
@@ -35,8 +35,8 @@ defmodule DwayWeb.RouteControllerTest do
               "lat" => -22.508229883387585,
               "long" => -44.093416921900584
             },
-            "id" => "2",
-            "index" => "1",
+            "id" => 2,
+            "index" => 1,
             "max_distance" => 10000,
             "modal" => "m",
             "name" => "Douglas Martins",
@@ -47,8 +47,8 @@ defmodule DwayWeb.RouteControllerTest do
               "lat" => -22.508229883387585,
               "long" => -44.093416921900584
             },
-            "id" => "3",
-            "index" => "10",
+            "id" => 3,
+            "index" => 10,
             "max_distance" => 10000,
             "modal" => "m",
             "name" => "Arthur Obayashi",
@@ -82,7 +82,7 @@ defmodule DwayWeb.RouteControllerTest do
 
       assert %{
                "delivery_time" => 387.7,
-               "driver_id" => "2",
+               "driver_id" => 2,
                "order_id" => "95436212",
                "pickup_time" => 118.6,
                "polyline" =>
@@ -97,8 +97,8 @@ defmodule DwayWeb.RouteControllerTest do
         "drivers" => [
           %{
             "coordinates" => %{},
-            "id" => "1",
-            "index" => "2",
+            "id" => 1,
+            "index" => 2,
             "max_distance" => 2000,
             "modal" => "b",
             "name" => "Julio de Jundiai",
@@ -108,8 +108,8 @@ defmodule DwayWeb.RouteControllerTest do
             "coordinates" => %{
               "lat" => -22.508229883387585
             },
-            "id" => "2",
-            "index" => "1",
+            "id" => 2,
+            "index" => 1,
             "max_distance" => 10000,
             "modal" => "m",
             "name" => "Douglas Martins",
@@ -119,8 +119,8 @@ defmodule DwayWeb.RouteControllerTest do
             "coordinates" => %{
               "lat" => nil
             },
-            "id" => "3",
-            "index" => "10",
+            "id" => 3,
+            "index" => 10,
             "max_distance" => 10000,
             "modal" => "m",
             "name" => "Arthur Obayashi",
@@ -147,12 +147,11 @@ defmodule DwayWeb.RouteControllerTest do
         }
       }
 
-      response =
-        conn
-        |> post(Routes.route_path(conn, :create), params)
-        |> json_response(:bad_request)
+      conn
+      |> post(Routes.route_path(conn, :create), params)
+      |> json_response(:unauthorized)
 
-      assert response == %{"errors" => %{"detail" => "Bad Request"}}
+      assert %{"errors" => %{"detail" => "Bad Request"}}
     end
   end
 end

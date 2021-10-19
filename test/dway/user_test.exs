@@ -1,7 +1,7 @@
 defmodule Dway.UserTest do
   use Dway.DataCase, async: true
 
-  alias Dway.User
+  alias Dway.Accounts.User
   alias Ecto.Changeset
 
   describe "changeset/2" do

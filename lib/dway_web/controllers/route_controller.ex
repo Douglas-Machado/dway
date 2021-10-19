@@ -6,8 +6,7 @@ defmodule DwayWeb.RouteController do
   use DwayWeb, :controller
 
   alias Dway.Routing
-  alias Dway.Routing.Route
-  alias Dway.Parser.{Api, DataParser}
+  alias Dway.Parser.DataParser
   alias Dway.{Parser, Request}
   alias DwayWeb.FallbackController
 

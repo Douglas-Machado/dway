@@ -2,9 +2,9 @@ defmodule Dway.Parser.Api do
   @moduledoc """
     Validate user token UUID
   """
-
-  alias Dway.Users.Accounts
   alias Ecto.UUID
+  alias Dway.Accounts
+  alias Dway.Accounts.User
 
   @doc """
     returns a tuple {:ok, token} if is a valid UUID and if the user exists in the database
@@ -22,7 +22,7 @@ defmodule Dway.Parser.Api do
   defp get(token) do
     case Accounts.get(token) do
       nil -> {:error, %{status: :not_found, result: "User not found!"}}
-      %Dway.User{} -> {:ok, token}
+      %User{} -> {:ok, token}
     end
   end
 end

@@ -19,8 +19,8 @@ defmodule Dway.Fleet.DriverTest do
 
       attributes = %{
         "coordinates" => %{"lat" => -22.513476978859, "long" => -44.091791768114874},
-        "id" => "1",
-        "index" => "2",
+        "id" => 1,
+        "index" => 2,
         "max_distance" => 2000,
         "modal" => "b",
         "name" => "Julio de Jundiai",
@@ -46,8 +46,8 @@ defmodule Dway.Fleet.DriverTest do
 
       attributes = %{
         "coordinates" => %{"lat" => -22.513476978859, "long" => -44.091791768114874},
-        "id" => "1",
-        "index" => "2",
+        "id" => 1,
+        "index" => 2,
         "max_distance" => 2000,
         "modal" => nil,
         "name" => "Julio de Jundiai",

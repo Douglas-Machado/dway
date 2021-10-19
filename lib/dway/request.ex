@@ -25,6 +25,12 @@ defmodule Dway.Request do
     this function will make a request to osrm api and in case of sucess,
     it will validate if the route total time is greater than delivery maximum time and
     then insert the values in the %Route{}, else will show an error and its reason.
+
+     ## OSRM
+
+     Returns a map with osrm response body
+
+     fields: distance, duration and polyline
   """
   def get_params(driver, order) do
     case request(driver, order) do
@@ -40,12 +46,7 @@ defmodule Dway.Request do
     end
   end
 
-  @doc """
-    Returns a map with osrm response body
-
-    fields: distance, duration and polyline
-  """
-  def request_osrm(string) do
+  defp request_osrm(string) do
     HTTPoison.start()
 
     with {:ok, %HTTPoison.Response{body: body}} <-
@@ -84,6 +85,18 @@ defmodule Dway.Request do
     end)
   end
 
+  # defp validate_field(map) do
+  #   pickup_time = map["pickup_time"]
+
+  #   case pickup_time <= 0 do
+  #     true ->
+  #       {:error, "Não foi possível roteirizar - OSRM indisponível"}
+
+  #     false ->
+  #       {:ok, map}
+  #   end
+  # end
+
   defp validate_time_window(map, order) do
     total_time = map["total_time"]
 
@@ -100,6 +113,7 @@ defmodule Dway.Request do
   defp request(driver, order) do
     "#{driver.coordinates.long},#{driver.coordinates.lat};#{order.pickup_coordinates.long},#{order.pickup_coordinates.lat};#{order.delivery_coordinates.long},#{order.delivery_coordinates.lat}"
     |> request_osrm()
+    # |> validate_field()
     |> validate_time_window(order)
   end
 end
