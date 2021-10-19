@@ -29,7 +29,7 @@ defmodule DwayWeb.FallbackController do
     conn
     |> put_status(:bad_request)
     |> put_view(ErrorView)
-    |> render("400.json", message: message)
+    |> render("404.json", message: message)
 
     # |> send_resp(404, message: "Não há drivers disponíveis")
   end
@@ -38,7 +38,7 @@ defmodule DwayWeb.FallbackController do
     conn
     |> put_status(:bad_request)
     |> put_view(ErrorView)
-    |> render("400.json", message: message)
+    |> render("406.json", message: message)
 
     # |> send_resp("406.json", message: "Não é possível roterizar a entrega")
   end

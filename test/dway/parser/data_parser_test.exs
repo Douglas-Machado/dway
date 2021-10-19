@@ -11,8 +11,8 @@ defmodule Dway.Parser.DataParserTest do
               "lat" => -22.513476978859,
               "long" => -44.091791768114874
             },
-            "id" => "1",
-            "index" => "2",
+            "id" => 1,
+            "index" => 2,
             "max_distance" => 2000,
             "modal" => "b",
             "name" => "Julio de Jundiai",
@@ -23,8 +23,8 @@ defmodule Dway.Parser.DataParserTest do
               "lat" => -22.508229883387585,
               "long" => -44.093416921900584
             },
-            "id" => "2",
-            "index" => "1",
+            "id" => 2,
+            "index" => 1,
             "max_distance" => 10000,
             "modal" => "m",
             "name" => "Douglas Martins",
@@ -35,8 +35,8 @@ defmodule Dway.Parser.DataParserTest do
               "lat" => -22.508229883387585,
               "long" => -44.093416921900584
             },
-            "id" => "3",
-            "index" => "10",
+            "id" => 3,
+            "index" => 10,
             "max_distance" => 10000,
             "modal" => "m",
             "name" => "Arthur Obayashi",
@@ -46,7 +46,7 @@ defmodule Dway.Parser.DataParserTest do
 
       response = DataParser.parse_drivers_params(params)
 
-      assert {:ok, [%Dway.Fleet.Driver{coordinates: %{lat: -22.513476978859, long: -44.091791768114874}, distance_to_delivery: nil, distance_to_pickup: nil, id: "1", index: 2, max_distance: 2000, modal: "b", name: "Julio de Jundiai"}, %Dway.Fleet.Driver{coordinates: %{lat: -22.508229883387585, long: -44.093416921900584}, distance_to_delivery: nil, distance_to_pickup: nil, id: "2", index: 1, max_distance: 10000, modal: "m", name: "Douglas Martins"}, %Dway.Fleet.Driver{coordinates: %{lat: -22.508229883387585, long: -44.093416921900584}, distance_to_delivery: nil, distance_to_pickup: nil, id: "3", index: 10, max_distance: 10000, modal: "m", name: "Arthur Obayashi"}]} = response
+      assert {:ok, [%Dway.Fleet.Driver{coordinates: %{lat: -22.513476978859, long: -44.091791768114874}, distance_to_delivery: nil, distance_to_pickup: nil, id: 1, index: 2, max_distance: 2000, modal: "b", name: "Julio de Jundiai"}, %Dway.Fleet.Driver{coordinates: %{lat: -22.508229883387585, long: -44.093416921900584}, distance_to_delivery: nil, distance_to_pickup: nil, id: 2, index: 1, max_distance: 10000, modal: "m", name: "Douglas Martins"}, %Dway.Fleet.Driver{coordinates: %{lat: -22.508229883387585, long: -44.093416921900584}, distance_to_delivery: nil, distance_to_pickup: nil, id: 3, index: 10, max_distance: 10000, modal: "m", name: "Arthur Obayashi"}]} = response
 
       end
 
@@ -56,8 +56,8 @@ defmodule Dway.Parser.DataParserTest do
       params = [
           %{
             "coordinates" => %{},
-            "id" => "1",
-            "index" => "2",
+            "id" => 1,
+            "index" => 2,
             "max_distance" => 2000,
             "modal" => "b",
             "name" => "Julio de Jundiai",
@@ -67,8 +67,8 @@ defmodule Dway.Parser.DataParserTest do
             "coordinates" => %{
               "lat" => -22.508229883387585
             },
-            "id" => "2",
-            "index" => "1",
+            "id" => 2,
+            "index" => 1,
             "max_distance" => 10000,
             "modal" => "m",
             "name" => "Douglas Martins",
@@ -79,7 +79,7 @@ defmodule Dway.Parser.DataParserTest do
               "lat" => -22.508229883387585,
               "long" => -44.093416921900584
             },
-            "id" => "3",
+            "id" => 3,
             "max_distance" => 10000,
             "modal" => "m",
             "name" => "Arthur Obayashi",
@@ -143,7 +143,7 @@ defmodule Dway.Parser.DataParserTest do
 
     response = DataParser.parse_order_params(params)
 
-    assert {:error, nil} = response
+    assert {:error, "dados da entrega inválidos"} = response
 
 
 

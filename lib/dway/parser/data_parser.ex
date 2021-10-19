@@ -20,7 +20,7 @@ defmodule Dway.Parser.DataParser do
       |> Enum.reject(&is_nil/1)
 
     case drivers do
-      [] -> {:error, [], message: "Nenhum driver encontrado"}
+      [] -> {:error, "Nenhum driver encontrado"}
       _ -> {:ok, drivers}
     end
   end
