@@ -1,0 +1,38 @@
+<div class="routes">
+    <div class="item-column">
+        <h4 class="item-title">Número do pedido</h4>
+        <%= for routes <- @routes do %>
+            <p class="item"><%=  routes.order_id%></p>
+        <% end %>
+    </div>
+    <div class="item-column">
+        <h4 class="item-title">Entregador(ID)</h4>
+        <%= for routes <- @routes do %>
+            <p class="item"><%=  routes.driver_id%></p>
+        <% end %>
+    </div>
+    <div class="item-column">
+        <h4 class="item-title">Tempo estimado da entrega (segundos)</h4>
+        <%= for routes <- @routes do %>
+                <p class="item"><%=  routes.total_time%></p>
+            <% end %>
+    </div>
+    <div class="item-column">
+        <h4 class="item-title">Tempo até a coleta (segundos)</h4>
+        <%= for routes <- @routes do %>
+                <p class="item"><%=  routes.pickup_time%></p>
+            <% end %>
+    </div>
+    <div class="item-column">
+        <h4 class="item-title">Tempo até a entrega</h4>
+        <%= for routes <- @routes do %>
+                <p class="item"><%=  routes.delivery_time%></p>
+            <% end %>
+    </div>
+    <div class="item-column">
+        <h4 class="item-title">Distância total (metros)</h4>
+        <%= for routes <- @routes do %>
+                <p class="item"><%=  routes.total_distance%></p>
+            <% end %>
+    </div>
+</div>

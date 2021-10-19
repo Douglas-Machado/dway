@@ -36,7 +36,10 @@ defmodule Dway.Request do
     case request(driver, order) do
       {:ok, map} ->
         route =
-          Route.changeset(%Route{order_id: order.id, driver_id: driver.id}, map)
+          Route.changeset(
+            %Route{order_id: order.id, driver_id: driver.id, modal: driver.modal},
+            map
+          )
           |> Route.applied_changeset()
 
         {:ok, route}
@@ -85,35 +88,41 @@ defmodule Dway.Request do
     end)
   end
 
-  # defp validate_field(map) do
-  #   pickup_time = map["pickup_time"]
-
-  #   case pickup_time <= 0 do
-  #     true ->
-  #       {:error, "Não foi possível roteirizar - OSRM indisponível"}
-
-  #     false ->
-  #       {:ok, map}
-  #   end
-  # end
-
-  defp validate_time_window(map, order) do
+  defp validate_field(map) do
     total_time = map["total_time"]
 
-    case total_time <= order.time_window do
+    case total_time == 0 do
       true ->
-        {:ok, map}
+        {:error, "Não foi possível roteirizar - OSRM indisponível"}
 
       _ ->
-        {:error,
-         "Não foi possível roteirizar: Tempo da rota excedido. Tempo estimado: #{total_time}s Tempo máximo: #{order.time_window}s"}
+        map
+    end
+  end
+
+  defp validate_time_window(map, order) do
+    case is_tuple(map) do
+      true ->
+        {:error, "Não foi possível roteirizar - OSRM indisponível"}
+
+      _ ->
+        total_time = map["total_time"]
+
+        case total_time <= order.time_window do
+          true ->
+            {:ok, map}
+
+          _ ->
+            {:error,
+             "Não foi possível roteirizar: Tempo da rota excedido. Tempo estimado: #{total_time}s Tempo máximo: #{order.time_window}s"}
+        end
     end
   end
 
   defp request(driver, order) do
     "#{driver.coordinates.long},#{driver.coordinates.lat};#{order.pickup_coordinates.long},#{order.pickup_coordinates.lat};#{order.delivery_coordinates.long},#{order.delivery_coordinates.lat}"
     |> request_osrm()
-    # |> validate_field()
+    |> validate_field()
     |> validate_time_window(order)
   end
 end

@@ -25,4 +25,8 @@ defmodule Dway.Routing do
     route_struct
     |> Repo.insert()
   end
+
+  def list_routes do
+    Repo.all(Route)
+  end
 end
