@@ -156,3 +156,33 @@
 .created-user h3 span{
   color: orange;
 }
+
+.routes{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.routes .item-column{
+  margin-left: 10px;
+}
+
+.routes .item-column h4{
+  width: 12rem;
+  min-height: 50px;
+  border: 2px solid black;
+  padding-bottom: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.routes .item-column .item{
+  margin-left: -16px;
+  margin-bottom: 32px;
+  border-bottom: 2px solid orange
+}
+
+.routes .item-column .modal-img{
+  width: 32px;
+  height: 32px;
+}

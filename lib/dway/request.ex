@@ -36,7 +36,10 @@ defmodule Dway.Request do
     case request(driver, order) do
       {:ok, map} ->
         route =
-          Route.changeset(%Route{order_id: order.id, driver_id: driver.id}, map)
+          Route.changeset(
+            %Route{order_id: order.id, driver_id: driver.id, modal: driver.modal},
+            map
+          )
           |> Route.applied_changeset()
 
         {:ok, route}

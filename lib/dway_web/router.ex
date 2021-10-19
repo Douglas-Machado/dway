@@ -26,7 +26,8 @@ defmodule DwayWeb.Router do
   scope "/", DwayWeb do
     pipe_through :browser
 
-    resources "/", UserController
+    get "/", DashboardController, :show
+    resources "/user", UserController
   end
 
   # Enables LiveDashboard only for development

@@ -10,6 +10,7 @@ defmodule Dway.Repo.Migrations.CreateRoutes do
       add :total_distance, :float
       add :order_id, :string
       add :driver_id, :integer
+      add :modal, :string
       timestamps()
     end
   end
