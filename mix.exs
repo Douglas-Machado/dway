@@ -46,7 +46,8 @@ defmodule Dway.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:haversine, "~> 0.1.0"},
-      {:httpoison, "~> 1.8"}
+      {:httpoison, "~> 1.8"},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
   end
 

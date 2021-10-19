@@ -25,7 +25,7 @@ defmodule Dway.Parser.DataParserTest do
           },
           "id" => 2,
           "index" => 1,
-          "max_distance" => 10000,
+          "max_distance" => 10_000,
           "modal" => "m",
           "name" => "Douglas Martins",
           "skills" => [%{"skill" => "string"}]
@@ -37,7 +37,7 @@ defmodule Dway.Parser.DataParserTest do
           },
           "id" => 3,
           "index" => 10,
-          "max_distance" => 10000,
+          "max_distance" => 10_000,
           "modal" => "m",
           "name" => "Arthur Obayashi",
           "skills" => [%{"skill" => "string"}]
@@ -64,7 +64,7 @@ defmodule Dway.Parser.DataParserTest do
                   distance_to_pickup: nil,
                   id: 2,
                   index: 1,
-                  max_distance: 10000,
+                  max_distance: 10_000,
                   modal: "m",
                   name: "Douglas Martins"
                 },
@@ -74,7 +74,7 @@ defmodule Dway.Parser.DataParserTest do
                   distance_to_pickup: nil,
                   id: 3,
                   index: 10,
-                  max_distance: 10000,
+                  max_distance: 10_000,
                   modal: "m",
                   name: "Arthur Obayashi"
                 }
@@ -98,7 +98,7 @@ defmodule Dway.Parser.DataParserTest do
           },
           "id" => 2,
           "index" => 1,
-          "max_distance" => 10000,
+          "max_distance" => 10_000,
           "modal" => "m",
           "name" => "Douglas Martins",
           "skills" => [%{"skill" => "string"}]
@@ -109,7 +109,7 @@ defmodule Dway.Parser.DataParserTest do
             "long" => -44.093416921900584
           },
           "id" => 3,
-          "max_distance" => 10000,
+          "max_distance" => 10_000,
           "modal" => "m",
           "name" => "Arthur Obayashi",
           "skills" => [%{"skill" => "string"}]
