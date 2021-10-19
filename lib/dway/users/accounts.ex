@@ -8,7 +8,9 @@ defmodule Dway.Users.Accounts do
   @doc """
     User registration
 
-    ## params %{email: user_email}
+    ## params
+
+    %{email: user_email}
   """
   def call(params \\ %{}) do
     params
