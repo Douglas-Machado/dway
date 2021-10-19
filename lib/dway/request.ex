@@ -46,7 +46,7 @@ defmodule Dway.Request do
     end
   end
 
-  def request_osrm(string) do
+  defp request_osrm(string) do
     HTTPoison.start()
 
     with {:ok, %HTTPoison.Response{body: body}} <-
@@ -85,6 +85,18 @@ defmodule Dway.Request do
     end)
   end
 
+  # defp validate_field(map) do
+  #   pickup_time = map["pickup_time"]
+
+  #   case pickup_time <= 0 do
+  #     true ->
+  #       {:error, "Não foi possível roteirizar - OSRM indisponível"}
+
+  #     false ->
+  #       {:ok, map}
+  #   end
+  # end
+
   defp validate_time_window(map, order) do
     total_time = map["total_time"]
 
@@ -101,6 +113,7 @@ defmodule Dway.Request do
   defp request(driver, order) do
     "#{driver.coordinates.long},#{driver.coordinates.lat};#{order.pickup_coordinates.long},#{order.pickup_coordinates.lat};#{order.delivery_coordinates.long},#{order.delivery_coordinates.lat}"
     |> request_osrm()
+    # |> validate_field()
     |> validate_time_window(order)
   end
 end

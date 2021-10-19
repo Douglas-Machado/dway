@@ -2,7 +2,7 @@ defmodule DwayWeb.RouteControllerTest do
   use DwayWeb.ConnCase
 
   setup do
-    {:ok, user} = Dway.Users.Accounts.call(%{email: "judite@d.com"})
+    {:ok, user} = Dway.Accounts.call(%{email: "judite@d.com"})
 
     conn =
       put_req_header(
@@ -147,12 +147,11 @@ defmodule DwayWeb.RouteControllerTest do
         }
       }
 
-      response =
-        conn
-        |> post(Routes.route_path(conn, :create), params)
-        |> json_response(:bad_request)
+      conn
+      |> post(Routes.route_path(conn, :create), params)
+      |> json_response(:unauthorized)
 
-      assert response == %{"errors" => %{"detail" => "Bad Request"}}
+      assert %{"errors" => %{"detail" => "Bad Request"}}
     end
   end
 end

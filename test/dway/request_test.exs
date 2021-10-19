@@ -3,9 +3,6 @@ defmodule Dway.RequestTest do
 
   alias Dway.Request
 
-  @osrm_docker Application.get_env(:dway, :osrm_docker)
-  @osrm Application.get_env(:dway, :osrm)
-
   describe "get_params/2" do
     test "when the params are valid, returns the route" do
       driver = %Dway.Fleet.Driver{

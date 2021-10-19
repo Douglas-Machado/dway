@@ -1,8 +1,8 @@
 defmodule Dway.Users.AccountsTest do
   use Dway.DataCase, async: true
 
-  alias Dway.User
-  alias Dway.Users.Accounts
+  alias Dway.Accounts.User
+  alias Dway.Accounts
 
   describe "call/1" do
     test "when the param is valid, returns the user" do

@@ -118,7 +118,7 @@ defmodule Dway.Parser.DataParserTest do
 
       response = DataParser.parse_drivers_params(params)
 
-      assert {:error, [], [message: "Nenhum driver encontrado"]} = response
+      assert {:error, "Nenhum driver encontrado"} = response
     end
   end
 

@@ -26,7 +26,6 @@ defmodule DwayWeb.Router do
   scope "/", DwayWeb do
     pipe_through :browser
 
-    # get "/", WelcomeController, :index
     resources "/", UserController
   end
 
