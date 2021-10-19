@@ -1,9 +1,10 @@
-defmodule Dway.Users.Accounts do
+defmodule Dway.Accounts do
   @moduledoc """
     The user context.
   """
 
-  alias Dway.{Repo, User}
+  alias Dway.Repo
+  alias Dway.Accounts.User
 
   @doc """
     User registration

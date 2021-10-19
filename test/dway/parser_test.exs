@@ -3,10 +3,8 @@ defmodule Dway.ParserTest do
   alias Dway.Parser
 
   describe "get_driver_to_pickup_distance/2" do
-
     test "when all params are valid, the first driver in the list" do
-
-      drivers =  [
+      drivers = [
         %Dway.Fleet.Driver{
           coordinates: %{lat: -22.508229883387585, long: -44.093416921900584},
           distance_to_delivery: nil,
@@ -38,6 +36,7 @@ defmodule Dway.ParserTest do
           name: "Eduardo Ferrazoli"
         }
       ]
+
       order = %Dway.Fleet.Order{
         customer_name: "Theodora",
         delivery_coordinates: %{lat: -22.52219686435724, long: -44.10977748780379},
@@ -48,12 +47,21 @@ defmodule Dway.ParserTest do
 
       response = Parser.get_driver_to_pickup_distance(drivers, order)
 
-      assert {:ok, %Dway.Fleet.Driver{coordinates: %{lat: -22.508229883387585, long: -44.093416921900584}, distance_to_delivery: 2803.5628518888216, distance_to_pickup: 276.44614440930565, id: 2, index: 1, max_distance: 3000, modal: "m", name: "Douglas Martins"}} = response
+      assert {:ok,
+              %Dway.Fleet.Driver{
+                coordinates: %{lat: -22.508229883387585, long: -44.093416921900584},
+                distance_to_delivery: 2803.5628518888216,
+                distance_to_pickup: 276.44614440930565,
+                id: 2,
+                index: 1,
+                max_distance: 3000,
+                modal: "m",
+                name: "Douglas Martins"
+              }} = response
     end
 
     test "when there are some error, returns an error" do
-
-      drivers =  [
+      drivers = [
         %Dway.Fleet.Driver{
           coordinates: %{lat: -22.508229883387585, long: -44.093416921900584},
           distance_to_delivery: nil,
@@ -85,6 +93,7 @@ defmodule Dway.ParserTest do
           name: "Eduardo Ferrazoli"
         }
       ]
+
       order = %Dway.Fleet.Order{
         customer_name: "Theodora",
         delivery_coordinates: %{lat: -22.52219686435724, long: -44.10977748780379},
@@ -96,8 +105,6 @@ defmodule Dway.ParserTest do
       response = Parser.get_driver_to_pickup_distance(drivers, order)
 
       assert {:error, "Sem drivers disponíveis"} = response
-
     end
-
   end
 end

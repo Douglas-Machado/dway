@@ -1,5 +1,4 @@
 defmodule Dway.RequestTest do
-
   use Dway.DataCase, async: true
 
   alias Dway.Request
@@ -9,7 +8,6 @@ defmodule Dway.RequestTest do
 
   describe "get_params/2" do
     test "when the params are valid, returns the route" do
-
       driver = %Dway.Fleet.Driver{
         coordinates: %{lat: -22.508229883387585, long: -44.093416921900584},
         distance_to_delivery: 2803.5628518888216,
@@ -31,12 +29,22 @@ defmodule Dway.RequestTest do
 
       response = Request.get_params(driver, order)
 
-      assert {:ok, %Dway.Routing.Route{delivery_time: 387.7, driver_id: 2, id: nil, inserted_at: nil, order_id: "95436212", pickup_time: 118.6, polyline: "lckhCx~blG`KjCm@jEsLaB`F}SeFsAgEqAf@}BhI~Bm@hCvAl@zQoBpFWh@Zp@hHuBJTxGx@|F{@jHlGz[lQtq@X`@|Fb@fBkBBaAv@CFp@vBpAxK`A", total_distance: 4817.0, total_time: 506.3}} = response
-
+      assert {:ok,
+              %Dway.Routing.Route{
+                delivery_time: 387.7,
+                driver_id: 2,
+                id: nil,
+                inserted_at: nil,
+                order_id: "95436212",
+                pickup_time: 118.6,
+                polyline:
+                  "lckhCx~blG`KjCm@jEsLaB`F}SeFsAgEqAf@}BhI~Bm@hCvAl@zQoBpFWh@Zp@hHuBJTxGx@|F{@jHlGz[lQtq@X`@|Fb@fBkBBaAv@CFp@vBpAxK`A",
+                total_distance: 4817.0,
+                total_time: 506.3
+              }} = response
     end
 
     test "when the total time is higher than the time window, returns an error" do
-
       driver = %Dway.Fleet.Driver{
         coordinates: %{lat: -22.508229883387585, long: -44.093416921900584},
         distance_to_delivery: 2803.5628518888216,
@@ -58,10 +66,9 @@ defmodule Dway.RequestTest do
 
       response = Request.get_params(driver, order)
 
-      assert {:error, "Não foi possível roteirizar: Tempo da rota excedido. Tempo estimado: 506.3s Tempo máximo: 300s"} = response
-
+      assert {:error,
+              "Não foi possível roteirizar: Tempo da rota excedido. Tempo estimado: 506.3s Tempo máximo: 300s"} =
+               response
     end
-
   end
-
 end

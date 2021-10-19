@@ -1,4 +1,4 @@
-defmodule Dway.User do
+defmodule Dway.Accounts.User do
   @moduledoc """
     user schema
   """
@@ -28,7 +28,10 @@ defmodule Dway.User do
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/,
       message: "E-mail deve possuir @ e não conter espaços"
     )
-    |> validate_length(:email, max: 160, message: "O tamanho máximo é de 160 caracteres")
+    |> validate_length(:email,
+      max: 160,
+      message: "O tamanho máximo é de 160 caracteres"
+    )
     |> unique_constraint(:email)
   end
 end

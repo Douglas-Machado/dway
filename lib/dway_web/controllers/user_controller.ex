@@ -4,8 +4,8 @@ defmodule DwayWeb.UserController do
   """
   use DwayWeb, :controller
 
-  alias Dway.User
-  alias Dway.Users.Accounts
+  alias Dway.Accounts.User
+  alias Dway.Accounts
 
   action_fallback FallbackController
 
