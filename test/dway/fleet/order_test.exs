@@ -29,7 +29,7 @@ defmodule Dway.Fleet.OrderTest do
             "long" => -44.09077352792969
           }
         },
-        "skill" => "string",
+        "skill" => 1,
         "time_window" => 1800
       }
 
@@ -62,7 +62,6 @@ defmodule Dway.Fleet.OrderTest do
             "long" => -44.09077352792969
           }
         },
-        "skill" => "string",
         "time_window" => nil
       }
 

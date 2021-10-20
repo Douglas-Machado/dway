@@ -23,6 +23,7 @@ defmodule Dway.Parser do
     drivers
     |> get_drivers_params(order, order_distance)
     |> reject_drivers_by_max_distance()
+    |> validate_order_skill(order)
     |> order_drivers_by_modal(order_distance)
     |> handle_response()
   end
@@ -39,6 +40,22 @@ defmodule Dway.Parser do
       })
     end)
   end
+
+  defp validate_order_skill(drivers, order) do
+    case order.skill != nil do
+      true -> filter_drivers_by_skill(drivers, order)
+      false -> drivers
+    end
+  end
+
+  defp filter_drivers_by_skill(drivers, order) do
+    case Enum.reject(drivers, fn %Driver{skill: skill} -> skill != order.skill end) do
+      [] -> {:error, "Nenhum driver apto para realizar essa entrega"}
+      drivers -> drivers
+    end
+  end
+
+  defp order_drivers_by_modal({:error, message}, _), do: {:error, message}
 
   defp order_drivers_by_modal(drivers, order_distance)
        when order_distance <= @max_distance_biker do
@@ -60,6 +77,10 @@ defmodule Dway.Parser do
                       } ->
       distance_to_delivery > max_distance
     end)
+  end
+
+  defp handle_response({:error, message}) do
+    {:error, message}
   end
 
   defp handle_response([]) do

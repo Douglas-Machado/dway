@@ -6,14 +6,30 @@ defmodule Dway.Fleet.Order do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @require_params [:id, :time_window, :pickup_coordinates, :delivery_coordinates, :customer_name]
+  @order_params [
+    :id,
+    :time_window,
+    :pickup_coordinates,
+    :delivery_coordinates,
+    :customer_name,
+    :skill
+  ]
+
+  @require_params [
+    :id,
+    :time_window,
+    :pickup_coordinates,
+    :delivery_coordinates,
+    :customer_name
+  ]
 
   @type t :: %__MODULE__{
           id: String.t(),
           customer_name: String.t(),
           time_window: Float.t(),
           pickup_coordinates: map(),
-          delivery_coordinates: map()
+          delivery_coordinates: map(),
+          skill: Integer.t()
         }
 
   @primary_key false
@@ -23,6 +39,7 @@ defmodule Dway.Fleet.Order do
     field :time_window, :float
     field :pickup_coordinates, :map
     field :delivery_coordinates, :map
+    field :skill, :integer
   end
 
   @spec changeset(
@@ -31,10 +48,11 @@ defmodule Dway.Fleet.Order do
         ) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = order, attributes) do
     attributes = parser_coordinates_delivery(attributes)
+
     attributes = parser_coordinates_pickup(attributes)
 
     order
-    |> cast(attributes, @require_params)
+    |> cast(attributes, @order_params)
     |> validate_required(@require_params)
   end
 

@@ -16,7 +16,7 @@ defmodule Dway.Parser.DataParserTest do
           "max_distance" => 2000,
           "modal" => "b",
           "name" => "Julio de Jundiai",
-          "skills" => [%{"skill" => "string"}]
+          "skills" => 1
         },
         %{
           "coordinates" => %{
@@ -28,7 +28,7 @@ defmodule Dway.Parser.DataParserTest do
           "max_distance" => 10_000,
           "modal" => "m",
           "name" => "Douglas Martins",
-          "skills" => [%{"skill" => "string"}]
+          "skill" => 1
         },
         %{
           "coordinates" => %{
@@ -40,7 +40,7 @@ defmodule Dway.Parser.DataParserTest do
           "max_distance" => 10_000,
           "modal" => "m",
           "name" => "Arthur Obayashi",
-          "skills" => [%{"skill" => "string"}]
+          "skills" => 1
         }
       ]
 
@@ -89,8 +89,7 @@ defmodule Dway.Parser.DataParserTest do
           "index" => 2,
           "max_distance" => 2000,
           "modal" => "b",
-          "name" => "Julio de Jundiai",
-          "skills" => [%{"skill" => "string"}]
+          "name" => "Julio de Jundiai"
         },
         %{
           "coordinates" => %{
@@ -100,8 +99,7 @@ defmodule Dway.Parser.DataParserTest do
           "index" => 1,
           "max_distance" => 10_000,
           "modal" => "m",
-          "name" => "Douglas Martins",
-          "skills" => [%{"skill" => "string"}]
+          "name" => "Douglas Martins"
         },
         %{
           "coordinates" => %{
@@ -111,8 +109,7 @@ defmodule Dway.Parser.DataParserTest do
           "id" => 3,
           "max_distance" => 10_000,
           "modal" => "m",
-          "name" => "Arthur Obayashi",
-          "skills" => [%{"skill" => "string"}]
+          "name" => "Arthur Obayashi"
         }
       ]
 
@@ -139,7 +136,6 @@ defmodule Dway.Parser.DataParserTest do
             "long" => -44.09077352792969
           }
         },
-        "skill" => "string",
         "time_window" => 1800
       }
 
@@ -171,7 +167,6 @@ defmodule Dway.Parser.DataParserTest do
             "long" => -44.09077352792969
           }
         },
-        "skill" => "string",
         "time_window" => nil
       }
 
