@@ -28,7 +28,7 @@ defmodule DwayWeb.RouteControllerTest do
             "max_distance" => 2000,
             "modal" => "b",
             "name" => "Julio de Jundiai",
-            "skills" => [%{"skill" => "string"}]
+            "skills" => 1
           },
           %{
             "coordinates" => %{
@@ -40,7 +40,7 @@ defmodule DwayWeb.RouteControllerTest do
             "max_distance" => 10_000,
             "modal" => "m",
             "name" => "Douglas Martins",
-            "skills" => [%{"skill" => "string"}]
+            "skills" => 1
           },
           %{
             "coordinates" => %{
@@ -51,8 +51,7 @@ defmodule DwayWeb.RouteControllerTest do
             "index" => 10,
             "max_distance" => 10_000,
             "modal" => "m",
-            "name" => "Arthur Obayashi",
-            "skills" => [%{"skill" => "string"}]
+            "name" => "Arthur Obayashi"
           }
         ],
         "order" => %{
@@ -70,7 +69,6 @@ defmodule DwayWeb.RouteControllerTest do
               "long" => -44.09077352792969
             }
           },
-          "skill" => "string",
           "time_window" => 1800
         }
       }

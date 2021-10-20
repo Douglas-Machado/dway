@@ -32,8 +32,11 @@ defmodule Dway.Parser.DataParser do
   """
   def parse_order_params(order_params) do
     case Order.changeset(%Order{}, order_params) |> Order.applied_changeset() do
-      nil -> {:error, "dados da entrega inválidos"}
-      order -> {:ok, order}
+      nil ->
+        {:error, "dados da entrega inválidos"}
+
+      order ->
+        {:ok, order}
     end
   end
 end

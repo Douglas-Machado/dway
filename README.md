@@ -7,6 +7,7 @@ An elixir project using phoenix framework(1.6.0-rc.0) to find the best driver to
 * [Jason](https://github.com/michalmuskala/jason)
 * [Haversine](https://github.com/pkinney/distance)
 * [HTTPoison](https://github.com/edgurgel/httpoison)
+* [Polyline decoder](https://github.com/pkinney/polyline_ex)
 
 ## osrm/osrm-backend
   High performance routing engine written in C++14 designed to run on OpenStreetMap data. This api offers some services but in this project it only uses route service, that finds the fastest route between coordinates
@@ -61,13 +62,14 @@ At the homepage, you can see the main dashboard and the sign up link where you c
             },
             "modal": "string",
             "index": "integer(unique)",
+            "skill": "integer"
         }
     ],
     "order": {
         "id":"string (unique)",
         "customer_name": "string",
         "time_window": "float",
-        "skill": "string",
+        "skill": "integer",
         "pickup": {
             "coordinates":{
                 "long": "float",
@@ -85,8 +87,8 @@ At the homepage, you can see the main dashboard and the sign up link where you c
 }
 ```
   ### Required fields
- In case that any field of driver is missing, invalid or nil, the application will not consider this driver.
- Case any field of delivery is missing or nil, the application will not execute
+ In case that any required field of driver is missing, invalid or nil, the application will not consider this driver.
+ Case any required field of delivery is missing or nil, the application will not execute
 
   ### Drivers
 
@@ -102,11 +104,15 @@ At the homepage, you can see the main dashboard and the sign up link where you c
 
 `index`: the position of the driver in the list, case two drivers are in the same space, the chosen driver is the one with the lowest index.
 
+`skill(optional)`: cases where delivery requires something specific, such as high-value products. Driver is able to perform this type of delivery if he has the required skill
+
   ### Order
 
 `id`: represents the id(unique) of the order
 
 `time_window`: maximum time to pickup and delivery in seconds
+
+`skill(optional)`: cases where order requires something specific, such as high-value products
 
 `pickup`: the coordinates of pickup, same as the `driver` coordinates
 
@@ -128,7 +134,7 @@ At the homepage, you can see the main dashboard and the sign up link where you c
 
  ### Route
 
- `order_id`: represent the id(unique) of the order
+`order_id`: represent the id(unique) of the order
 
 `driver_id`: represent the id(unique) of the driver
 
