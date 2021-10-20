@@ -188,24 +188,14 @@
   border-bottom: 2px solid orange
 }
 
-.modal-img{
+.bike-img{
   width: 64px;
   height: 32px;
-  transition: 2s;
-
-
-animation-name: spin;
-animation-duration: 4000ms;
-animation-iteration-count: infinite;
-animation-timing-function: linear;
-
-@keyframes spin { 
-    from { 
-        -ms-transform: rotate(0deg); 
-    } to { 
-        -ms-transform: rotate(360deg); 
-    }
 }
+
+.motorcycle-img{
+  width: 32px;
+  height: 32px;
 }
 
 .dashboard{
@@ -224,8 +214,8 @@ animation-timing-function: linear;
 }
 
 .route-button{
-  background-color: #E6530F;
-  transition: 1s;
+  background-color: #ffff;
+  transition: 0.3s;
   border-radius: 8px;
   padding: 5px 10px 5px 10px;
   cursor: pointer;
