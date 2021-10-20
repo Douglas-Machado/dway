@@ -52,7 +52,7 @@ At the homepage, you will able to register your email and get your API key(token
   {
     "drivers": [
         {
-            "id": "string (unique)",
+            "id": "integer(unique)",
             "name": "string",
             "max_distance": "integer",
             "coordinates": {
@@ -60,12 +60,7 @@ At the homepage, you will able to register your email and get your API key(token
                 "lat": "float"
             },
             "modal": "string",
-            "index": "integer (unique)",
-            "skills": [
-                {
-                    "skill": "string"
-                }
-            ]
+            "index": "integer(unique)",
         }
     ],
     "order": {
@@ -122,7 +117,7 @@ At the homepage, you will able to register your email and get your API key(token
   ```JSON
   {
     "order_id": "string",
-    "driver_id": "string (unique)",
+    "driver_id": "integer(unique)",
     "total_time": "float",
     "pickup_time": "float",
     "delivery_time": "float",

@@ -21,7 +21,7 @@ defmodule Dway.ParserTest do
           distance_to_pickup: nil,
           id: 3,
           index: 10,
-          max_distance: 10000,
+          max_distance: 10_000,
           modal: "m",
           name: "Arthur Obayashi"
         },
@@ -31,7 +31,7 @@ defmodule Dway.ParserTest do
           distance_to_pickup: nil,
           id: 4,
           index: 8,
-          max_distance: 10000,
+          max_distance: 10_000,
           modal: "m",
           name: "Eduardo Ferrazoli"
         }

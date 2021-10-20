@@ -88,6 +88,8 @@
   cursor: pointer;
 }
 
+/* user and dashboard styles below*/
+
 *{
   padding: 0;
   margin: 0;
@@ -123,6 +125,10 @@
 
 .link a{
   text-decoration: none;
+}
+
+.dashboard .link-register{
+  padding-top: 9px;
 }
 
 .form-email{
@@ -182,7 +188,17 @@
   border-bottom: 2px solid orange
 }
 
-.routes .item-column .modal-img{
-  width: 32px;
+.modal-img{
+  width: 64px;
   height: 32px;
+}
+
+.dashboard{
+  display: flex;
+  justify-content: space-between;
+}
+
+.dashboard-title{
+  text-align: center;
+  display: inline-block;
 }

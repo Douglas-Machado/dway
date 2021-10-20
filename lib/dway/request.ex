@@ -52,14 +52,14 @@ defmodule Dway.Request do
   defp request_osrm(string) do
     HTTPoison.start()
 
-    with {:ok, %HTTPoison.Response{body: body}} <-
-           HTTPoison.get(@osrm_docker <> string <> "?geometries=polyline") do
-      {:ok, content} = Jason.decode(body, keys: :atoms)
+    case HTTPoison.get(@osrm_docker <> string <> "?geometries=polyline") do
+      {:ok, %HTTPoison.Response{body: body}} ->
+        {:ok, content} = Jason.decode(body, keys: :atoms)
 
-      content.routes
-      |> route_time_and_distance()
-      |> hd()
-    else
+        content.routes
+        |> route_time_and_distance()
+        |> hd()
+
       {:error, _content} ->
         {:ok, %HTTPoison.Response{body: body}} =
           HTTPoison.get(@osrm <> string <> "?geometries=polyline")

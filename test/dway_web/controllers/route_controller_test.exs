@@ -37,7 +37,7 @@ defmodule DwayWeb.RouteControllerTest do
             },
             "id" => 2,
             "index" => 1,
-            "max_distance" => 10000,
+            "max_distance" => 10_000,
             "modal" => "m",
             "name" => "Douglas Martins",
             "skills" => [%{"skill" => "string"}]
@@ -49,7 +49,7 @@ defmodule DwayWeb.RouteControllerTest do
             },
             "id" => 3,
             "index" => 10,
-            "max_distance" => 10000,
+            "max_distance" => 10_000,
             "modal" => "m",
             "name" => "Arthur Obayashi",
             "skills" => [%{"skill" => "string"}]
@@ -110,7 +110,7 @@ defmodule DwayWeb.RouteControllerTest do
             },
             "id" => 2,
             "index" => 1,
-            "max_distance" => 10000,
+            "max_distance" => 10_000,
             "modal" => "m",
             "name" => "Douglas Martins",
             "skills" => [%{"skill" => "string"}]
@@ -121,7 +121,7 @@ defmodule DwayWeb.RouteControllerTest do
             },
             "id" => 3,
             "index" => 10,
-            "max_distance" => 10000,
+            "max_distance" => 10_000,
             "modal" => "m",
             "name" => "Arthur Obayashi",
             "skills" => [%{"skill" => "string"}]
