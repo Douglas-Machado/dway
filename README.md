@@ -28,7 +28,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
   ### Sign up
 
-At the homepage, you will able to register your email and get your API key(token) to make requests to Dway API.
+At the homepage, you can see the main dashboard and the sign up link where you can register your email and get your API key(token) to make requests to Dway API.
 
  ## REQUEST
 

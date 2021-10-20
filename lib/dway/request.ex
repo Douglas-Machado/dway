@@ -42,6 +42,7 @@ defmodule Dway.Request do
               order_pickup_coordinates: order.pickup_coordinates,
               order_delivery_coordinates: order.delivery_coordinates,
               driver_id: driver.id,
+              driver_name: driver.name,
               modal: driver.modal,
               driver_coordinates: driver.coordinates
             },

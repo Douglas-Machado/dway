@@ -35,40 +35,4 @@
     </header>
     <%= @inner_content %>
   </body>
-  <script>
-
-
-    var driverLat = document.getElementById("driver-lat").innerText;
-    var driverLong = document.getElementById("driver-long").innerText;
-
-    var orderLat = document.getElementById("order-lat").innerText;
-    var orderLong = document.getElementById("order-long").innerText;
-
-    var deliveryLat = document.getElementById("delivery-lat").innerText;
-    var deliveryLong = document.getElementById("delivery-long").innerText;
-
-    var latlngs = [
-    [driverLat, driverLong],
-    [orderLat , orderLong],
-    [deliveryLat , deliveryLong],
-    ];
-    
-    var mymap = L.map('mapid').setView([driverLat, driverLong], 14);
-
-    
-
-
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
-
-    var polyline = L.polyline(latlngs, {color: 'red'}).addTo(mymap);
-
-    var driver_marker = L.marker([driverLat, driverLong]).addTo(mymap);
-
-    var order_pickup_marker = L.marker([orderLat, orderLong]).addTo(mymap);
-
-    var order_delivery_marker = L.marker([deliveryLat, deliveryLong]).addTo(mymap);
-
-
-  </script>
 </html>

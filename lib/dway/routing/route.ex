@@ -6,7 +6,7 @@ defmodule Dway.Routing.Route do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @fields_to_export ~w(order_id driver_id total_time pickup_time delivery_time total_distance polyline modal)a
+  @fields_to_export ~w(order_id driver_id total_time pickup_time delivery_time total_distance polyline)a
 
   @derive {Jason.Encoder, only: @fields_to_export}
 
@@ -32,6 +32,7 @@ defmodule Dway.Routing.Route do
           polyline: String.t(),
           modal: String.t(),
           driver_coordinates: map(),
+          driver_name: String.t(),
           order_pickup_coordinates: map(),
           order_delivery_coordinates: map()
         }
@@ -46,6 +47,7 @@ defmodule Dway.Routing.Route do
     field :polyline, :string
     field :modal, :string
     field :driver_coordinates, :map
+    field :driver_name, :string
     field :order_pickup_coordinates, :map
     field :order_delivery_coordinates, :map
     timestamps()
