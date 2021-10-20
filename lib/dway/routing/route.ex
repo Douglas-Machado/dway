@@ -30,7 +30,10 @@ defmodule Dway.Routing.Route do
           delivery_time: Float.t(),
           total_distance: Float.t(),
           polyline: String.t(),
-          modal: String.t()
+          modal: String.t(),
+          driver_coordinates: map(),
+          order_pickup_coordinates: map(),
+          order_delivery_coordinates: map()
         }
 
   schema "routes" do
@@ -42,6 +45,9 @@ defmodule Dway.Routing.Route do
     field :driver_id, :integer
     field :polyline, :string
     field :modal, :string
+    field :driver_coordinates, :map
+    field :order_pickup_coordinates, :map
+    field :order_delivery_coordinates, :map
     timestamps()
   end
 
