@@ -11,6 +11,9 @@ defmodule Dway.Repo.Migrations.CreateRoutes do
       add :order_id, :string
       add :driver_id, :integer
       add :modal, :string
+      add :driver_coordinates, :map
+      add :order_pickup_coordinates, :map
+      add :order_delivery_coordinates, :map
       timestamps()
     end
   end

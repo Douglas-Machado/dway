@@ -132,13 +132,13 @@ At the homepage, you will able to register your email and get your API key(token
 
 `driver_id`: represent the id(unique) of the driver
 
-`total_time`: total time(pickup and delivery) in seconds
+`total_time`: total time(pickup and delivery) in seconds(estimated time)
 
-`pickup_time`: pickup time in seconds
+`pickup_time`: pickup time in seconds(estimated time)
 
-`delivery_time`: delivery time in seconds
+`delivery_time`: delivery time in seconds(estimated time)
 
-`total_distance`: the total distance between driver, pickup and delivery
+`total_distance`: the total distance between driver, pickup and delivery(estimated distance)
 
 `polyline`: an string that represents the polyline
 

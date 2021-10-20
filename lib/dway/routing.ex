@@ -14,6 +14,22 @@ defmodule Dway.Routing do
   end
 
   @doc """
+  Gets a single route.
+
+  Raises `Ecto.NoResultsError` if the Route does not exist.
+
+  ## Examples
+
+      iex> get_route!(123)
+      %Route{}
+
+      iex> get_route!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_route(id), do: Repo.get(Route, id)
+
+  @doc """
   Creates a route.
 
   ## Examples

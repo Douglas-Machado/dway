@@ -37,7 +37,14 @@ defmodule Dway.Request do
       {:ok, map} ->
         route =
           Route.changeset(
-            %Route{order_id: order.id, driver_id: driver.id, modal: driver.modal},
+            %Route{
+              order_id: order.id,
+              order_pickup_coordinates: order.pickup_coordinates,
+              order_delivery_coordinates: order.delivery_coordinates,
+              driver_id: driver.id,
+              modal: driver.modal,
+              driver_coordinates: driver.coordinates
+            },
             map
           )
           |> Route.applied_changeset()

@@ -27,6 +27,7 @@ defmodule DwayWeb.Router do
     pipe_through :browser
 
     get "/", DashboardController, :show
+    get "/route/:route_id", DashboardController, :create
     resources "/user", UserController
   end
 
