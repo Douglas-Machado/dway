@@ -1,11 +1,9 @@
 {
-    "router":
-        {
-            "driver_id": "string (unique)",
-            "total_time": "integer",
-            "pickup_time": "integer",
-            "delivery_time": "integer",
-            "polyline": "string",
-            "total_distance": "integer"
-        }
+    "order_id": "string",
+    "driver_id": "string (unique)",
+    "total_time": "integer",
+    "pickup_time": "integer",
+    "delivery_time": "integer",
+    "total_distance": "integer",
+    "polyline": "string"
 }

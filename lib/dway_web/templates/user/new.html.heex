@@ -1,0 +1,7 @@
+<header class="container">
+    <div class="content">
+        <h1 class="register-title">Cadastre seu email</h1>
+
+        <div class="form-email"><%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %> </div>
+    </div>
+</header>

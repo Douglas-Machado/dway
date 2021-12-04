@@ -1,5 +1,5 @@
 /* This file is for your main application CSS */
-@import "./phoenix.css";
+/* @import "./phoenix.css"; */
 
 /* Alerts and form errors used by phx.new */
 .alert {
@@ -86,4 +86,151 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* user and dashboard styles below*/
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat'
+}
+.logo-img{
+  width: 120px;
+  height: 120px;
+}
+
+.bike-img{
+  width: 80px;
+  height: 80px;
+}
+
+.top{
+  text-align: center;
+}
+
+.register-title{
+  text-align: center;
+}
+
+.container{
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.container .content{
+  text-align: center;
+}
+
+.link a{
+  text-decoration: none;
+}
+
+.dashboard .link-register{
+  padding-top: 9px;
+}
+
+.form-email{
+  margin-top: 30px;
+}
+
+.email{
+  font-size: 20px;
+}
+
+.email-input input[type="text"]{
+  width: 300px;
+}
+
+.submit{
+  padding-top: 10px;
+}
+
+.submit button{
+  background-color: #F7A42A;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.show-user-token{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  list-style: none;
+}
+
+.created-user h3 span{
+  color: orange;
+}
+
+.routes{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.routes .item-column{
+  margin-left: 10px;
+}
+
+.routes .item-column h4{
+  width: 12rem;
+  min-height: 50px;
+  border: 2px solid black;
+  padding-bottom: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.routes .item-column .item{
+  margin-left: -16px;
+  margin-bottom: 32px;
+  border-bottom: 2px solid orange
+}
+
+.bike-img{
+  width: 64px;
+  height: 32px;
+}
+
+.motorcycle-img{
+  width: 32px;
+  height: 32px;
+}
+
+.dashboard{
+  display: flex;
+  justify-content: space-between;
+}
+
+.dashboard-title{
+  text-align: center;
+  display: inline-block;
+}
+
+#mapid { 
+  width: 1090px;
+  height: 600px; 
+}
+
+.route-button{
+  background-color: #ffff;
+  transition: 0.3s;
+  border-radius: 8px;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+}
+
+.route-button:hover{
+  background-color: #E51B23;
+}
+
+.route-button a{
+  color: black;
+  text-decoration: none;
+}
+
+.route-button a:hover{
+  text-decoration: none;
+  color: black;
 }

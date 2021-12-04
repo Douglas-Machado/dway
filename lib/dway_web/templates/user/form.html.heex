@@ -1,0 +1,14 @@
+<.form let={f} for={@changeset} action={@action}>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Email já cadastrado ou inválido</p>
+    </div>
+  <% end %>
+
+  <span class="email"><%= label f, :email %></span>
+  <span class="email-input"><%= text_input f, :email %></span>
+
+  <div class="submit">
+    <%= submit "Salvar" %>
+  </div>
+</.form>

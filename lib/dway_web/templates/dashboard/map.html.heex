@@ -1,0 +1,13 @@
+ <div class="container">
+    <div id="mapid"></div>
+    <p id="driver-lat" style="display: none"><%= @route.driver_coordinates["lat"] %></p>
+    <p id="driver-long" style="display: none"><%= @route.driver_coordinates["long"] %></p>
+
+    <p id="order-lat" style="display: none"><%= @route.order_pickup_coordinates["lat"] %></p>
+    <p id="order-long" style="display: none"><%= @route.order_pickup_coordinates["long"] %></p>
+
+    <p id="delivery-lat" style="display: none"><%= @route.order_delivery_coordinates["lat"] %></p>
+    <p id="delivery-long" style="display: none"><%= @route.order_delivery_coordinates["long"] %></p>
+
+    <p id="polyline" style="display: none"><%= inspect(@polyline) %></p>
+</div>

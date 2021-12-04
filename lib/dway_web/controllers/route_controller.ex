@@ -1,53 +1,45 @@
 defmodule DwayWeb.RouteController do
+  @moduledoc """
+    The entry point of application
+  """
+
   use DwayWeb, :controller
 
   alias Dway.Routing
-  alias Dway.Routing.Route
+  alias Dway.Parser.DataParser
   alias Dway.{Parser, Request}
+  alias DwayWeb.FallbackController
 
-  action_fallback DwayWeb.FallbackController
+  action_fallback FallbackController
 
-  def index(conn, _params) do
-    routes = Routing.list_routes()
-    render(conn, "index.json", routes: routes)
-  end
+  @doc """
+    Returns the route json if all conditions match
 
+    ## params
+
+    *conn
+    *route_params - json with driver and order params
+
+    The route params will be validated and parsed to structs %Order{} and %Driver{},
+    then the list of drivers will be sorted, and the best driver will be selected.
+    After that we were able to make a request to OSRM and insert the data in the struct %Route{}.
+    Finally it is possible to save the struct %Route{} in the database and
+    show the user the JSON with the final result.
+  """
+  # @spec create(Plug.Conn.t(), nil | maybe_improper_list | map) :: Plug.Conn.t()
   def create(conn, route_params) do
-    driver =
-      Parser.get_driver_to_pickup_distance(route_params["drivers"], route_params["order"])
-      |> Enum.at(0)
-      |> Request.get_params(route_params["order"])
+    with {:ok, drivers} <- DataParser.parse_drivers_params(route_params["drivers"]),
+         {:ok, order} <- DataParser.parse_order_params(route_params["order"]),
+         {:ok, driver} <- Parser.get_driver_to_pickup_distance(drivers, order),
+         {:ok, route} <- Request.get_params(driver, order) do
+      Routing.insert_route(route)
 
-    # somente mostrar resultado PRECISA SER EDITADO
-    conn
-    |> json(driver)
-
-    # with {:ok, %Route{} = route} <- Routing.create_route(route_params) do
-    #   conn
-    #   |> put_status(:created)
-    #   |> put_resp_header("location", Routes.route_path(conn, :show, route))
-    #   |> render("show.json", route: route)
-    # end
-  end
-
-  def show(conn, %{"id" => id}) do
-    route = Routing.get_route!(id)
-    render(conn, "show.json", route: route)
-  end
-
-  def update(conn, %{"id" => id, "route" => route_params}) do
-    route = Routing.get_route!(id)
-
-    with {:ok, %Route{} = route} <- Routing.update_route(route, route_params) do
-      render(conn, "show.json", route: route)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    route = Routing.get_route!(id)
-
-    with {:ok, %Route{}} <- Routing.delete_route(route) do
-      send_resp(conn, :no_content, "")
+      conn
+      |> json(route)
+    else
+      {:error, message} -> FallbackController.call(conn, {:error, message})
+      {:error, [], message} -> FallbackController.call(conn, {:ok, :empty_drivers, message})
+      {:ok, nil, message} -> FallbackController.call(conn, {:ok, :empty_order, message})
     end
   end
 end

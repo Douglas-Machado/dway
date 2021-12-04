@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="dashboard">
+        <h1 class="dashboard-title">DASHBOARD</h1>
+        <span class="link-register"><%= link "cadastre seu email", to: Routes.user_path(@conn, :new) %></span>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID Pedido</th>
+                <th scope="col">ID Driver</th>
+                <th scope="col">Entregador</th>
+                <th scope="col">Tempo total(min)</th>
+                <th scope="col">Modal</th>
+                <th scope="col">Tempo da coleta(min)</th>
+                <th scope="col">Tempo da entrega(min)</th>
+                <th scope="col">Distância total(km)</th>
+                <th scope="col">Rota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%= for route <- @routes do %>
+                <tr>
+                    <th scope="row"><%= route.order_id %></th>
+                    <td><%= route.driver_id %></td>
+                    <td><%= route.driver_name %></td>
+                    <td><%= Float.round(route.total_time/60) %></td>
+                    <td>
+                        <%= if route.modal == "b" do %>
+                            <img class="bike-img" src={Routes.static_path(@conn, "/images/bike.png")} alt="bike logo"/>
+                        <% else %>
+                            <img class="motorcycle-img" src={Routes.static_path(@conn, "/images/hat.png")} alt="motorcycle logo"/>
+                        <% end %>
+                    </td>
+                    <td><%= Float.round(route.pickup_time/60,2)%></td>
+                    <td><%= Float.round(route.delivery_time/60) %></td>
+                    <td><%= Float.round(route.total_distance/1000,1) %></td>
+                    <td>
+                        <button class="route-button"><%= link "Rota", to: Routes.dashboard_path(@conn, :create, route.id) %></button>
+                    </td>
+            <% end %>
+        </tbody>
+    </table>
+</div>

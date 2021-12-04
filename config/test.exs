@@ -25,5 +25,9 @@ config :dway, Dway.Mailer, adapter: Swoosh.Adapters.Test
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :dway,
+  osrm_docker: "http://127.0.0.1:5000/route/v1/driving/",
+  osrm: "http://router.project-osrm.org/route/v1/driving/"
+
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime

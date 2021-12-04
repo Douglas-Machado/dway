@@ -1,4 +1,6 @@
 defmodule DwayWeb.FallbackController do
+  alias DwayWeb.ErrorView
+
   @moduledoc """
   Translates controller action results into valid `Plug.Conn` responses.
 
@@ -6,19 +8,27 @@ defmodule DwayWeb.FallbackController do
   """
   use DwayWeb, :controller
 
-  # This clause handles errors returned by Ecto's insert/update/delete.
-  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
+  @doc """
+    handle the errors and show the user the json with the current error message.
+  """
+  def call(conn, {:error, content}) do
     conn
-    |> put_status(:unprocessable_entity)
-    |> put_view(DwayWeb.ChangesetView)
-    |> render("error.json", changeset: changeset)
+    |> put_status(:unauthorized)
+    |> put_view(ErrorView)
+    |> render("401.json", content: content)
   end
 
-  # This clause is an example of how to handle resources that cannot be found.
-  def call(conn, {:error, :not_found}) do
+  def call(conn, {:ok, :empty_drivers, message}) do
     conn
-    |> put_status(:not_found)
-    |> put_view(DwayWeb.ErrorView)
-    |> render(:"404")
+    |> put_status(:bad_request)
+    |> put_view(ErrorView)
+    |> render("404.json", message: message)
+  end
+
+  def call(conn, {:ok, :empty_order, message}) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(ErrorView)
+    |> render("406.json", message: message)
   end
 end

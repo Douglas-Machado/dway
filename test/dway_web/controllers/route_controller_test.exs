@@ -1,92 +1,155 @@
 defmodule DwayWeb.RouteControllerTest do
   use DwayWeb.ConnCase
 
-  import Dway.RoutingFixtures
+  setup do
+    {:ok, user} = Dway.Accounts.call(%{email: "judite@d.com"})
 
-  alias Dway.Routing.Route
+    conn =
+      put_req_header(
+        build_conn(),
+        "authentication",
+        user.id
+      )
 
-  @create_attrs %{
-    api_token: "some api_token",
-    drivers: "some drivers",
-    order: "some order"
-  }
-  @update_attrs %{
-    api_token: "some updated api_token",
-    drivers: "some updated drivers",
-    order: "some updated order"
-  }
-  @invalid_attrs %{api_token: nil, drivers: nil, order: nil}
-
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    [conn: conn]
   end
 
-  describe "index" do
-    test "lists all routes", %{conn: conn} do
-      conn = get(conn, Routes.route_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
-    end
-  end
+  describe "create/2" do
+    test "when all params are valid, creates the route", %{conn: conn} do
+      params = %{
+        "drivers" => [
+          %{
+            "coordinates" => %{
+              "lat" => -22.513476978859,
+              "long" => -44.091791768114874
+            },
+            "id" => 1,
+            "index" => 2,
+            "max_distance" => 2000,
+            "modal" => "b",
+            "name" => "Julio de Jundiai",
+            "skills" => 1
+          },
+          %{
+            "coordinates" => %{
+              "lat" => -22.508229883387585,
+              "long" => -44.093416921900584
+            },
+            "id" => 2,
+            "index" => 1,
+            "max_distance" => 10_000,
+            "modal" => "m",
+            "name" => "Douglas Martins",
+            "skills" => 1
+          },
+          %{
+            "coordinates" => %{
+              "lat" => -22.508229883387585,
+              "long" => -44.093416921900584
+            },
+            "id" => 3,
+            "index" => 10,
+            "max_distance" => 10_000,
+            "modal" => "m",
+            "name" => "Arthur Obayashi"
+          }
+        ],
+        "order" => %{
+          "customer_name" => "Theodora",
+          "delivery" => %{
+            "coordinates" => %{
+              "lat" => -22.52219686435724,
+              "long" => -44.10977748780379
+            }
+          },
+          "id" => "95436212",
+          "pickup" => %{
+            "coordinates" => %{
+              "lat" => -22.50776369362348,
+              "long" => -44.09077352792969
+            }
+          },
+          "time_window" => 1800
+        }
+      }
 
-  describe "create route" do
-    test "renders route when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.route_path(conn, :create), route: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
-
-      conn = get(conn, Routes.route_path(conn, :show, id))
+      response =
+        conn
+        |> post(Routes.route_path(conn, :create), params)
+        |> json_response(:ok)
 
       assert %{
-               "id" => ^id,
-               "api_token" => "some api_token",
-               "drivers" => "some drivers",
-               "order" => "some order"
-             } = json_response(conn, 200)["data"]
+               "delivery_time" => 387.7,
+               "driver_id" => 2,
+               "order_id" => "95436212",
+               "pickup_time" => 118.6,
+               "polyline" =>
+                 "lckhCx~blG`KjCm@jEsLaB`F}SeFsAgEqAf@}BhI~Bm@hCvAl@zQoBpFWh@Zp@hHuBJTxGx@|F{@jHlGz[lQtq@X`@|Fb@fBkBBaAv@CFp@vBpAxK`A",
+               "total_distance" => 4817.0,
+               "total_time" => 506.3
+             } = response
     end
 
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.route_path(conn, :create), route: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
+    test "when the coordinates are nil, returns an error", %{conn: conn} do
+      params = %{
+        "drivers" => [
+          %{
+            "coordinates" => %{},
+            "id" => 1,
+            "index" => 2,
+            "max_distance" => 2000,
+            "modal" => "b",
+            "name" => "Julio de Jundiai",
+            "skills" => [%{"skill" => "string"}]
+          },
+          %{
+            "coordinates" => %{
+              "lat" => -22.508229883387585
+            },
+            "id" => 2,
+            "index" => 1,
+            "max_distance" => 10_000,
+            "modal" => "m",
+            "name" => "Douglas Martins",
+            "skills" => [%{"skill" => "string"}]
+          },
+          %{
+            "coordinates" => %{
+              "lat" => nil
+            },
+            "id" => 3,
+            "index" => 10,
+            "max_distance" => 10_000,
+            "modal" => "m",
+            "name" => "Arthur Obayashi",
+            "skills" => [%{"skill" => "string"}]
+          }
+        ],
+        "order" => %{
+          "customer_name" => "Theodora",
+          "delivery" => %{
+            "coordinates" => %{
+              "lat" => -22.52219686435724,
+              "long" => -44.10977748780379
+            }
+          },
+          "id" => "95436212",
+          "pickup" => %{
+            "coordinates" => %{
+              "lat" => -22.50776369362348,
+              "long" => -44.09077352792969
+            }
+          },
+          "skill" => "string",
+          "time_window" => 1800
+        }
+      }
+
+      conn
+      |> post(Routes.route_path(conn, :create), params)
+      |> json_response(:unauthorized)
+
+      assert %{"errors" => %{"detail" => "Bad Request"}}
     end
-  end
-
-  describe "update route" do
-    setup [:create_route]
-
-    test "renders route when data is valid", %{conn: conn, route: %Route{id: id} = route} do
-      conn = put(conn, Routes.route_path(conn, :update, route), route: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get(conn, Routes.route_path(conn, :show, id))
-
-      assert %{
-               "id" => ^id,
-               "api_token" => "some updated api_token",
-               "drivers" => "some updated drivers",
-               "order" => "some updated order"
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, route: route} do
-      conn = put(conn, Routes.route_path(conn, :update, route), route: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "delete route" do
-    setup [:create_route]
-
-    test "deletes chosen route", %{conn: conn, route: route} do
-      conn = delete(conn, Routes.route_path(conn, :delete, route))
-      assert response(conn, 204)
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.route_path(conn, :show, route))
-      end
-    end
-  end
-
-  defp create_route(_) do
-    route = route_fixture()
-    %{route: route}
   end
 end
